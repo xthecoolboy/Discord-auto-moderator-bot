@@ -64,6 +64,9 @@ client.on('message', message => {
 		}
 	}
 	
+	console.log(msgContent.substr(0, 4));
+	console.log(msgContent.substr(5, msgContent.indexOf(' ') - 1));
+	
 	//############################################
 	//----------------COMMANDS--------------------
 	//############################################
