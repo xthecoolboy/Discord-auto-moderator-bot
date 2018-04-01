@@ -68,10 +68,10 @@ client.on('message', message => {
 	//----------------COMMANDS--------------------
 	//############################################
 	var msgContent = message.content;
-	console.log(msgContent.substr(0, 4));
+	console.log(msgContent.substr(0, 5));
 	console.log(msgContent.substr(5, msgContent.indexOf(' ') - 1));
-	if(msgContent.substr(0, 4) == 'modB!'){
-		if(msgContent.substr(5, msgContent.indexOf(' ') - 1) == 'addReqs'){
+	if(msgContent.substr(0, 5) == 'modB!'){
+		if(msgContent.substr(6, msgContent.indexOf(' ') - 1) == 'addReqs'){
 			if(message.member.roles.highestRole != currentGuild.roles.highestRole || message.member.nickname != 'warhammercas#1366'){
 				message.channel.send('Must be admin to modify lfg syntax requirements.')
 						.then(message => console.log(`Sent message: ${message.content}`))
