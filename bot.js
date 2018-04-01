@@ -69,19 +69,15 @@ client.on('message', message => {
 	//############################################
 	//----------------COMMANDS--------------------
 	//############################################
-	console.log(message.content.substr(0, 5));
-	console.log(message.content.substr(5, message.content.indexOf(" ") - 5));
 	if(message.content.substr(0, 5) == 'modB!'){
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addReqs'){
 			if(!message.member.roles.find("name", "LEADERSHIP") && message.member.nickname != 'warhammercas#1366'){
 				message.channel.send('Must be admin to modify lfg syntax requirements.')
-						.then(message => console.log(`Sent message: ${message.content}`))
-						.catch(console.error);
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
 				return;
 			}
 			var requirement = message.content.split(" ").pop();
-			//var requirement = message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) - message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1);
-			console.log('Requirement: ' + requirement);
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
 				case 'raid':
 					raidReqs.push(requirement);
@@ -114,6 +110,90 @@ client.on('message', message => {
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 			}
+		}
+		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmReqs'){
+			if(!message.member.roles.find("name", "LEADERSHIP") && message.member.nickname != 'warhammercas#1366'){
+				message.channel.send('Must be admin to modify lfg syntax requirements.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+				return;
+			}
+			var requirement = message.content.split(" ").pop();
+			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)){
+				case 'raid':
+					if(raidReqs.indexOf(requirement) == -1){
+						message.channel.send('Could not find requirement in lfg-raid: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
+					}else{
+						raidReqs.splice(raidReqs.indexOf(requirement), 1);
+					}
+					break;
+				case 'crucible':
+					if(crucibleReqs.indexOf(requirement) == -1){
+						message.channel.send('Could not find requirement in lfg-crucible: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
+					}else{
+						crucibleReqs.splice(raidReqs.indexOf(requirement), 1);
+					}
+					break;
+				case 'pve':
+					if(pveReqs.indexOf(requirement) == -1){
+						message.channel.send('Could not find requirement in lfg-pve: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
+					}else{
+						pveReqs.splice(raidReqs.indexOf(requirement), 1);
+					}
+					break;
+				case 'all':
+					if(raidReqs.indexOf(requirement) == -1){
+						message.channel.send('Could not find requirement in lfg-raid: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
+					}else if(crucibleReqs.indexOf(requirement) == -1){
+						message.channel.send('Could not find requirement in lfg-crucible: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
+					}else if(pveReqs.indexOf(requirement) == -1){
+						message.channel.send('Could not find requirement in lfg-pve: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
+					}else{
+						raidReqs.splice(raidReqs.indexOf(requirement), 1);
+						crucibleReqs.splice(raidReqs.indexOf(requirement), 1);
+						pveReqs.splice(raidReqs.indexOf(requirement), 1);
+					}
+					break;
+				default:
+					message.channel.send('Usage: modB!rmReqs raid/crucible/pve/all <requirement>. "All" will remove this requirement in all lfg chats.')
+						.then(message => console.log(`Sent message: ${message.content}`))
+						.catch(console.error);
+			}
+		}
+		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'listReqs'){
+			message.channel.send('Requirements:')
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+			message.channel.send('Order matters: ' + orderMatters)
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+			message.channel.send('@ here required: ' + hereRequired)
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+			message.channel.send('Allow extra text: ' + allowExtra)
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+			message.channel.send('lfg-raid requirements:' + raidReqs)
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+			message.channel.send('lfg-crucible requirements:' + crucibleReqs)
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+			message.channel.send('lfg-pve requirements:' + pveReqs)
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
 		}
 	}
 	if(message.channel == raidChannel){
