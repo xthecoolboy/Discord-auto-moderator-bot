@@ -24,7 +24,7 @@ client.on('message', message => {
 	if(!foundGuild){
 		currentGuild = message.guild;
 		var foundRaid, foundCrucible, foundPvE, foundQuestions = false;
-		var guildChannels = currentGuild.channels.toArray();
+		var guildChannels = currentGuild.channels.array();
 		var i = 0;
 		while(!foundRaid){
 			if(guildChannels[i].name == 'lfg-raid'){
