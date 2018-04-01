@@ -1,1 +1,14 @@
-
+{
+	"name": "activity-bot",
+	"version": "1.0.0",
+	"description": "My own Discord bot",
+	"main": "bot.js",
+	"author": "warhammercasey",
+	"scripts": {
+		"start": "node bot.js"
+	},
+	"dependencies": {
+		"discord.js": "^11.1.0",
+		"request": "^2.81.0"
+	}
+}
