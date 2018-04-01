@@ -64,13 +64,12 @@ client.on('message', message => {
 		}
 	}
 	
-	console.log(msgContent.substr(0, 4));
-	console.log(msgContent.substr(5, msgContent.indexOf(' ') - 1));
-	
 	//############################################
 	//----------------COMMANDS--------------------
 	//############################################
 	var msgContent = message.content;
+	console.log(msgContent.substr(0, 4));
+	console.log(msgContent.substr(5, msgContent.indexOf(' ') - 1));
 	if(msgContent.substr(0, 4) == 'modB!'){
 		if(msgContent.substr(5, msgContent.indexOf(' ') - 1) == 'addReqs'){
 			if(message.member.roles.highestRole != currentGuild.roles.highestRole || message.member.nickname != 'warhammercas#1366'){
