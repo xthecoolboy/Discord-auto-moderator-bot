@@ -127,6 +127,9 @@ client.on('message', message => {
 							.catch(console.error);
 					}else{
 						raidReqs.splice(raidReqs.indexOf(requirement), 1);
+						message.channel.send('Removed requirement from raid: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
 					}
 					break;
 				case 'crucible':
@@ -136,6 +139,9 @@ client.on('message', message => {
 							.catch(console.error);
 					}else{
 						crucibleReqs.splice(raidReqs.indexOf(requirement), 1);
+						message.channel.send('Removed requirement from crucible: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
 					}
 					break;
 				case 'pve':
@@ -145,6 +151,9 @@ client.on('message', message => {
 							.catch(console.error);
 					}else{
 						pveReqs.splice(raidReqs.indexOf(requirement), 1);
+						message.channel.send('Removed requirement from crucible: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
 					}
 					break;
 				case 'all':
@@ -164,6 +173,9 @@ client.on('message', message => {
 						raidReqs.splice(raidReqs.indexOf(requirement), 1);
 						crucibleReqs.splice(raidReqs.indexOf(requirement), 1);
 						pveReqs.splice(raidReqs.indexOf(requirement), 1);
+						message.channel.send('Removed requirement from all: ' + requirement)
+							.then(message => console.log(`Sent message: ${message.content}`))
+							.catch(console.error);
 					}
 					break;
 				default:
@@ -172,7 +184,7 @@ client.on('message', message => {
 						.catch(console.error);
 			}
 		}
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'listReqs'){
+		if(message.content.split("!").pop() == 'listReqs'){
 			message.channel.send('Requirements:')
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
