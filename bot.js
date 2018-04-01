@@ -79,13 +79,19 @@ client.on('message', message => {
 			switch(msgContent.substr(msgContent.indexOf(' ') + 1, msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) - 1)) {
 				case 'raid':
 					raidReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement to raid: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+						.then(message => console.log(`Sent message: ${message.content}`))
+						.catch(console.error);
 					break;
 				case 'crucible':
 					crucibleReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement to crucible: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+						.then(message => console.log(`Sent message: ${message.content}`))
+						.catch(console.error);
 					break;
 				case 'pve':
 					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					message.channel.send('Added requirement: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+					message.channel.send('Added requirement to pve: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
@@ -93,7 +99,7 @@ client.on('message', message => {
 					raidReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
 					crucibleReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
 					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					message.channel.send('Added requirement: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+					message.channel.send('Added requirement to all: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
