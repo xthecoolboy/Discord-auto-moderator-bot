@@ -14,7 +14,9 @@ var hereRequired = false;
 var orderMatters = false;
 var allowExtra = true;
 
-var raidReqs, crucibleReqs, pveReqs = [];
+var raidReqs = [];
+var crucibleReqs = [];
+var pveReqs = [];
 
 client.on('ready', () => {
 	console.log("I am ready!");
