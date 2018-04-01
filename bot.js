@@ -67,41 +67,40 @@ client.on('message', message => {
 	//############################################
 	//----------------COMMANDS--------------------
 	//############################################
-	var msgContent = message.content;
-	console.log(msgContent.substr(5, msgContent.indexOf(' ') - 1));
-	console.log(msgContent.substr(msgContent.indexOf(' ') + 1, msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) - 1));
-	if(msgContent.substr(0, 5) == 'modB!'){
-		if(msgContent.substr(6, msgContent.indexOf(' ') - 1) == 'addReqs'){
+	console.log(message.content.substr(5, message.content.indexOf(' ') - 1));
+	console.log(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - 1));
+	if(message.content.substr(0, 5) == 'modB!'){
+		if(message.content.substr(6, message.content.indexOf(' ') - 1) == 'addReqs'){
 			if(message.member.roles.highestRole != currentGuild.roles.highestRole || message.member.nickname != 'warhammercas#1366'){
 				message.channel.send('Must be admin to modify lfg syntax requirements.')
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 				return;
 			}
-			switch(msgContent.substr(msgContent.indexOf(' ') + 1, msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) - 1)) {
+			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - 1)) {
 				case 'raid':
-					raidReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					message.channel.send('Added requirement to raid: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+					raidReqs.push(message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement to raid: ' + message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1))
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'crucible':
-					crucibleReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					message.channel.send('Added requirement to crucible: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+					crucibleReqs.push(message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement to crucible: ' + message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1))
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'pve':
-					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					message.channel.send('Added requirement to pve: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+					pveReqs.push(message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement to pve: ' + message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1))
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'all':
-					raidReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					crucibleReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
-					message.channel.send('Added requirement to all: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+					raidReqs.push(message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1));
+					crucibleReqs.push(message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1));
+					pveReqs.push(message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement to all: ' + message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1))
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
