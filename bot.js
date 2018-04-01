@@ -70,7 +70,7 @@ client.on('message', message => {
 	console.log(message.content.indexOf(" "));
 	console.log(message.content.substr(5, message.content.indexOf(' ') - 5));
 	console.log(message.content.substr(5, 6));//TODO: fix this bug
-	console.log(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') + 1));
+	console.log(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1));
 	if(message.content.substr(0, 5) == 'modB!'){
 		if(message.content.substr(6, message.content.indexOf(" ") - 5) == 'addReqs'){
 			if(message.member.roles.highestRole != currentGuild.roles.highestRole || message.member.nickname != 'warhammercas#1366'){
