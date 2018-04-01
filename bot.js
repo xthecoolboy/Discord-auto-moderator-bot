@@ -67,9 +67,35 @@ client.on('message', message => {
 	//############################################
 	//----------------COMMANDS--------------------
 	//############################################
-	if(message.content.substr(0, 4) == 'modB!'){
-		if(message.content.substr(5, message.content.indexOf(' ') - 1) == 'addReqs'){
-			
+	var msgContent = message.content;
+	if(msgContent.substr(0, 4) == 'modB!'){
+		if(msgContent.substr(5, msgContent.indexOf(' ') - 1) == 'addReqs'){
+			if(message.member.roles.highestRole != currentGuild.roles.highestRole || message.member.nickname != 'warhammercas#1366'){
+				message.channel.send('Must be admin to modify lfg syntax requirements.')
+						.then(message => console.log(`Sent message: ${message.content}`))
+						.catch(console.error);
+				return;
+			}
+			switch(msgContent.substr(msgContent.indexOf(' ') + 1, msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) - 1)) {
+				case 'raid':
+					raidReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					break;
+				case 'crucible':
+					crucibleReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					break;
+				case 'pve':
+					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					break;
+				case 'all':
+					raidReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					crucibleReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					break;
+				default:
+					message.channel.send('Usage: modB!addreqs raid/crucible/pve/all <requirement>. "All" will set this requirement to all lfg chats.')
+						.then(message => console.log(`Sent message: ${message.content}`))
+						.catch(console.error);
+			}
 		}
 	}
 	if(message.channel == raidChannel){
