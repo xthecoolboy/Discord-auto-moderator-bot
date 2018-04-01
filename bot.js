@@ -68,8 +68,8 @@ client.on('message', message => {
 	//----------------COMMANDS--------------------
 	//############################################
 	var msgContent = message.content;
-	console.log(msgContent.substr(0, 5));
 	console.log(msgContent.substr(5, msgContent.indexOf(' ') - 1));
+	console.log(msgContent.substr(msgContent.indexOf(' ') + 1, msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) - 1));
 	if(msgContent.substr(0, 5) == 'modB!'){
 		if(msgContent.substr(6, msgContent.indexOf(' ') - 1) == 'addReqs'){
 			if(message.member.roles.highestRole != currentGuild.roles.highestRole || message.member.nickname != 'warhammercas#1366'){
