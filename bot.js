@@ -85,11 +85,17 @@ client.on('message', message => {
 					break;
 				case 'pve':
 					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+						.then(message => console.log(`Sent message: ${message.content}`))
+						.catch(console.error);
 					break;
 				case 'all':
 					raidReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
 					crucibleReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
 					pveReqs.push(msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1));
+					message.channel.send('Added requirement: ' + msgContent.substr(msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1, msgContent.indexOf(' ', msgContent.indexOf(' ', msgContent.indexOf(' ') + 1) + 1) - 1))
+						.then(message => console.log(`Sent message: ${message.content}`))
+						.catch(console.error);
 					break;
 				default:
 					message.channel.send('Usage: modB!addreqs raid/crucible/pve/all <requirement>. "All" will set this requirement to all lfg chats.')
