@@ -67,10 +67,6 @@ client.on('message', message => {
 	//############################################
 	//----------------COMMANDS--------------------
 	//############################################
-	console.log(message.content.indexOf(" "));
-	console.log(message.content.substr(5, message.content.indexOf(' ') - 5));
-	console.log(message.content.substr(5, 6));//TODO: fix this bug
-	console.log(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1));
 	if(message.content.substr(0, 5) == 'modB!'){
 		if(message.content.substr(6, message.content.indexOf(" ") - 5) == 'addReqs'){
 			if(message.member.roles.highestRole != currentGuild.roles.highestRole || message.member.nickname != 'warhammercas#1366'){
@@ -79,7 +75,9 @@ client.on('message', message => {
 						.catch(console.error);
 				return;
 			}
-			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - 1)) {
+			var requirement = message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) - message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1);
+			console.log('Requirement: ' + requirement);
+			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
 				case 'raid':
 					raidReqs.push(message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1));
 					message.channel.send('Added requirement to raid: ' + message.content.substr(message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1, message.content.indexOf(' ', message.content.indexOf(' ', message.content.indexOf(' ') + 1) + 1) - 1))
