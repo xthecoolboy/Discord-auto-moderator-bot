@@ -331,8 +331,24 @@ client.on('message', message => {
 				if(hereRequired){
 					if(!message.content.includes("@here") && !message.content.includes("@everyone")){
 						message.member.user.createDM()
-							.then(dm => dm.send('@here is required somewhere in the lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log('Sent message: ${message.content}')).catch(console.error))
+							.then(dm => dm.send('@here is required somewhere in the lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 							.catch(console.error);
+					}else{
+						for(i = 0; i < raidReqs.length; i++){
+							if(raidReqs[i].includes("*")){
+								var req1 = raidReqs[i].substr(0, raidReqs.indexOf("*"));
+								var req2 = raidReqs[i].split("*").pop();
+								if(req1.charAt(0) == '~'){
+									req1 = req1.substr(1);
+								}
+								if(req2.charAt(req2.length) == '~'){
+									req2 = req2.slice(0, -1);
+								}
+								if(!message.content.includes(req1) || !message.content.includes(req2) || message.content.indexOf(req1) + req1.length != message.content.indexOf(req2) - 1){
+									
+								}
+							}
+						}
 					}
 				}
 			}else{
