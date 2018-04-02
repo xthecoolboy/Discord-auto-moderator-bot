@@ -19,6 +19,7 @@ var raidReqs = [];
 var crucibleReqs = [];
 var pveReqs = [];
 
+
 client.on('ready', () => {
 	console.log("I am ready!");
 });
@@ -26,7 +27,7 @@ client.on('ready', () => {
 client.on('message', message => {
 	if(!foundGuild){
 		currentGuild = message.guild;
-		var foundRaid, foundCrucible, foundPvE, foundQuestions = false;
+		/*var foundRaid, foundCrucible, foundPvE, foundQuestions = false;
 		var guildChannels = currentGuild.channels.array();
 		var i = 0;
 		while(!foundRaid){
@@ -64,7 +65,8 @@ client.on('message', message => {
 			}else{
 				i++;
 			}
-		}
+		}*/
+		raidChannel = currentGuild.channels.find("name", "lfg-raid");
 	}
 	
 	//############################################
@@ -349,7 +351,7 @@ client.on('message', message => {
 	//############################################
 	//-------------SYNTAX CHECKING----------------
 	//############################################
-	console.log("Raid channel: " + raidChannel.name);
+	console.log("Raid channel: " + raidChannel.name); //TODO fix cant find raid channel bug.
 	if(message.channel == raidChannel){
 		if(orderMatters){
 			if(allowExtra){
