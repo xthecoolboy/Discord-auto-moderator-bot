@@ -74,7 +74,7 @@ client.on('message', message => {
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addReqs'){
 			var isAdmin = false;
 			for(i = 0; i < adminRoles.length; i++){
-				if(!message.member.roles.find("name", adminRoles[i])){
+				if(message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
 			}
@@ -121,7 +121,7 @@ client.on('message', message => {
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmReqs'){
 			var isAdmin = false;
 			for(i = 0; i < adminRoles.length; i++){
-				if(!message.member.roles.find("name", adminRoles[i])){
+				if(message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
 			}
@@ -223,7 +223,7 @@ client.on('message', message => {
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addAdminRole'){
 			var isAdmin = false;
 			for(i = 0; i < adminRoles.length; i++){
-				if(!message.member.roles.find("name", adminRoles[i])){
+				if(message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
 			}
@@ -241,7 +241,7 @@ client.on('message', message => {
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmAdminRole'){
 			var isAdmin = false;
 			for(i = 0; i < adminRoles.length; i++){
-				if(!message.member.roles.find("name", adminRoles[i])){
+				if(message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
 			}
@@ -259,7 +259,7 @@ client.on('message', message => {
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setOrderMatters'){
 			var isAdmin = false;
 			for(i = 0; i < adminRoles.length; i++){
-				if(!message.member.roles.find("name", adminRoles[i])){
+				if(message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
 			}
@@ -289,7 +289,7 @@ client.on('message', message => {
 			var isAdmin = false;
 			for(i = 0; i < adminRoles.length; i++){
 				console.log('Checking if has ' + adminRoles[i]);
-				if(!message.member.roles.find("name", adminRoles[i])){
+				if(message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
 			}
@@ -318,7 +318,7 @@ client.on('message', message => {
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setAllowExtra'){
 			var isAdmin = false;
 			for(i = 0; i < adminRoles.length; i++){
-				if(!message.member.roles.find("name", adminRoles[i])){
+				if(message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
 			}
