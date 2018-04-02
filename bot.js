@@ -301,7 +301,7 @@ function setupReq(id) {
         case 'raid':
             if (raidReqs[raidReqs.length - 1].includes("||")) {
                 for (i = 0; i < raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
-                    raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||");
+                    raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||")[i];
                 }
             } else {
                 raidor[raidReqs.length - 1][0] = raidReqs[raidReqs.length - 1];
@@ -319,9 +319,9 @@ function setupReq(id) {
                     raidId[raidReqs.length - 1][i] = "none";
                 }
                 raidWild[raidReqs.length - 1][i] = [];
-                if (raidor[raidReqs.length - 1][i].includes("*")) {
-                    for (a = 0; a < raidor[raidReqs.length - 1][i].split("*").length - 1; a++) {
-                        raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '*', a+1);
+                if (raidor[raidReqs.length - 1][i].includes("$")) {
+                    for (a = 0; a < raidor[raidReqs.length - 1][i].split("$").length - 1; a++) {
+                        raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '$', a+1);
                     }
                 }
             }
