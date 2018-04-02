@@ -269,7 +269,7 @@ client.on('message', message => {
 					.catch(console.error);
 				return;
 			}
-			if(message.content.split(" ").pop()) == 'true'){
+			if(message.content.split(" ").pop() == 'true'){
 				orderMatters = true;
 				message.channel.send('Set orderMatters to true.')
 					.then(message => console.log(`Sent message: ${message.content}`))
