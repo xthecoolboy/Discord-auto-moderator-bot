@@ -302,12 +302,11 @@ function setupReq(id) {
             if (raidReqs[raidReqs.length - 1].includes("||")) {
                 for (i = 0; i <= raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
                     raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||")[i];
-                    console.log(raidor[raidReqs.length-1]);
                 }
             } else {
                 raidor[raidReqs.length - 1][0] = raidReqs[raidReqs.length - 1];
             }
-            for (i = 0; i <= raidor[raidReqs.length - 1].length; i++) {
+            for (i = 0; i < raidor[raidReqs.length - 1].length; i++) {
                 if (raidor[raidReqs.length - 1][i].charAt(0) == '~') {
                     if (raidor[raidReqs.length - 1][i].slice(-1) == '~') {
                         raidId[raidReqs.length - 1][i] = "both";
