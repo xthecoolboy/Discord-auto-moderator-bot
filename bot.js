@@ -19,17 +19,17 @@ var raidReqs = [];
 var crucibleReqs = [];
 var pveReqs = [];
 
-var raidId = [];
-var crucibleId = [];
-var pveId = [];
+var raidId = [[],[]];
+var crucibleId = [[],[]];
+var pveId = [[], []];
 
-var raidWild = [];
-var crucibleWild = [];
-var pveWild = [];
+var raidWild = [[], []];
+var crucibleWild = [[], []];
+var pveWild = [[], []];
 
-var raidor = [];
-var crucibleor = [];
-var pveor = [];
+var raidor = [[],[]];
+var crucibleor = [[],[]];
+var pveor = [[],[]];
 
 client.on('ready', () => {
 	console.log("I am ready!");
@@ -326,6 +326,7 @@ function setupReq(id) {
                 }
                 console.log(raidId[raidReqs.length - 1][i]);
                 for (a = 0; a < raidor[raidReqs.length - 1][i].split("*").length - 1; a++) {
+                    raidWild[raidReqs.length-1][i] = [];
                     raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '*', a);
                 }
             }
