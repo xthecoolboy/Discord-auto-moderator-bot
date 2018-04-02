@@ -13,6 +13,7 @@ var foundGuild = false;
 var hereRequired = false;
 var orderMatters = false;
 var allowExtra = true;
+var adminRoles = ["LEADERSHIP"];
 
 var raidReqs = [];
 var crucibleReqs = [];
@@ -71,7 +72,13 @@ client.on('message', message => {
 	//############################################
 	if(message.content.substr(0, 5) == 'modB!'){
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addReqs'){
-			if(!message.member.roles.find("name", "LEADERSHIP") && message.member.nickname != 'warhammercas#1366'){
+			var isAdmin = false;
+			for(i = 0; i < adminRoles; i++){
+				if(!message.member.roles.find("name", adminRoles[i])){
+					isAdmin = true;
+				}
+			}
+			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
 				message.channel.send('Must be admin to modify lfg syntax requirements.')
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
@@ -112,7 +119,13 @@ client.on('message', message => {
 			}
 		}
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmReqs'){
-			if(!message.member.roles.find("name", "LEADERSHIP") && message.member.nickname != 'warhammercas#1366'){
+			var isAdmin = false;
+			for(i = 0; i < adminRoles; i++){
+				if(!message.member.roles.find("name", adminRoles[i])){
+					isAdmin = true;
+				}
+			}
+			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
 				message.channel.send('Must be admin to modify lfg syntax requirements.')
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
@@ -197,19 +210,167 @@ client.on('message', message => {
 			message.channel.send('Allow extra text: ' + allowExtra)
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-			message.channel.send('lfg-raid requirements:' + raidReqs)
+			message.channel.send('lfg-raid requirements: ' + raidReqs)
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-			message.channel.send('lfg-crucible requirements:' + crucibleReqs)
+			message.channel.send('lfg-crucible requirements: ' + crucibleReqs)
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-			message.channel.send('lfg-pve requirements:' + pveReqs)
+			message.channel.send('lfg-pve requirements: ' + pveReqs)
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
+		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addAdminRole'){
+			var isAdmin = false;
+			for(i = 0; i < adminRoles; i++){
+				if(!message.member.roles.find("name", adminRoles[i])){
+					isAdmin = true;
+				}
+			}
+			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
+				message.channel.send('Must be admin to modify admin roles.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+				return;
+			}
+			adminRoles.push(message.content.split(" ").pop());
+			message.channel.send('Added admin role: '  + message.content.split(" ").pop())
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+		}
+		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmAdminRole'){
+			var isAdmin = false;
+			for(i = 0; i < adminRoles; i++){
+				if(!message.member.roles.find("name", adminRoles[i])){
+					isAdmin = true;
+				}
+			}
+			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
+				message.channel.send('Must be admin to modify admin roles.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+				return;
+			}
+			adminRoles.splice(adminRoles.indexOf(message.content.split(" ").pop()), 1);
+			message.channel.send('Removed admin role: '  + message.content.split(" ").pop())
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+		}
+		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setOrderMatters'){
+			var isAdmin = false;
+			for(i = 0; i < adminRoles; i++){
+				if(!message.member.roles.find("name", adminRoles[i])){
+					isAdmin = true;
+				}
+			}
+			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
+				message.channel.send('Must be admin to modify lfg syntax requirements.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+				return;
+			}
+			if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'true'){
+				orderMatters = true;
+				message.channel.send('Set orderMatters to true.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}else if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'false'){
+				orderMatters = false;
+				message.channel.send('Set orderMatters to false.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}else{
+				message.channel.send('Usage: modB!setOrderMatters true/false')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}
+		}
+		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setHereRequired'){
+			var isAdmin = false;
+			for(i = 0; i < adminRoles; i++){
+				if(!message.member.roles.find("name", adminRoles[i])){
+					isAdmin = true;
+				}
+			}
+			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
+				message.channel.send('Must be admin to modify lfg syntax requirements.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+				return;
+			}
+			if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'true'){
+				hereRequired = true;
+				message.channel.send('Set hereRequired to true.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}else if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'false'){
+				hereRequired = true;
+				message.channel.send('Set hereRequired to false.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}else{
+				message.channel.send('Usage: modB!setHereRequired true/false')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}
+		}
+		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setAllowExtra'){
+			var isAdmin = false;
+			for(i = 0; i < adminRoles; i++){
+				if(!message.member.roles.find("name", adminRoles[i])){
+					isAdmin = true;
+				}
+			}
+			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
+				message.channel.send('Must be admin to modify lfg syntax requirements.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+				return;
+			}
+			if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'true'){
+				allowExtra = true;
+				message.channel.send('Set allowExtra to true.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}else if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'false'){
+				allowExtra = true;
+				message.channel.send('Set allowExtra to false.')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}else{
+				message.channel.send('Usage: modB!setAllowExtra true/false')
+					.then(message => console.log(`Sent message: ${message.content}`))
+					.catch(console.error);
+			}
+		}
 	}
+	
+	//############################################
+	//-------------SYNTAX CHECKING----------------
+	//############################################
+	
 	if(message.channel == raidChannel){
-		
+		if(orderMatters){
+			if(allowExtra){
+				if(hereRequired){
+					if(message.content.substr(0, message.content.indexOf(" ")) != '@here' && message.content.substr(0, message.content.indexOf(" ")) != '@everyone'){
+						
+					}
+				}
+			}
+		}else{
+			if(allowExtra){
+				if(hereRequired){
+					if(!message.content.includes("@here") && !message.content.includes("@everyone")){
+						message.member.user.createDM()
+							.then(dm => dm.send('@here is required somewhere in the lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log('Sent message: ${message.content}')).catch(console.error))
+							.catch(console.error);
+					}
+				}
+			}else{
+				
+			}
+		}
 	}
 });
 
