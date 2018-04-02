@@ -27,46 +27,10 @@ client.on('ready', () => {
 client.on('message', message => {
 	if(!foundGuild){
 		currentGuild = message.guild;
-		/*var foundRaid, foundCrucible, foundPvE, foundQuestions = false;
-		var guildChannels = currentGuild.channels.array();
-		var i = 0;
-		while(!foundRaid){
-			if(guildChannels[i].name == 'lfg-raid'){
-				foundRaid = true;
-				i = 0;
-				raidChannel = guildChannels[i];
-			}else{
-				i++;
-			}
-		}
-		while(!foundCrucible){
-			if(guildChannels[i].name == 'lfg-crucible'){
-				foundCrucible = true;
-				i = 0;
-				crucibleChannel = guildChannels[i];
-			}else{
-				i++;
-			}
-		}
-		while(!foundPvE){
-			if(guildChannels[i].name == 'lfg-pve'){
-				foundPvE = true;
-				i = 0;
-				pveChannel = guildChannels[i];
-			}else{
-				i++;
-			}
-		}
-		while(!foundQuestions){
-			if(guildChannels[i].name == 'lfg-questions'){
-				foundQuestions = true;
-				i = 0;
-				questionsChannel = guildChannels[i];
-			}else{
-				i++;
-			}
-		}*/
 		raidChannel = currentGuild.channels.find("name", "lfg-raid");
+		crucibleChannel = currentGuild.channels.find("name", "lfg-crucible");
+		pveChannel = currentGuild.channels.find("name", "lfg-pve");
+		questionsChannel = currentGuild.channels.find("name", "lfg-questions");
 	}
 	
 	//############################################
