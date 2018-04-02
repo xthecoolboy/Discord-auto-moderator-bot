@@ -302,6 +302,7 @@ function setupReq(id) {
             if (raidReqs[raidReqs.length - 1].includes("||")) {
                 for (i = 0; i <= raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
                     raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||")[i];
+                    console.log(raidor[raidReqs.length-1]);
                 }
             } else {
                 raidor[raidReqs.length - 1][0] = raidReqs[raidReqs.length - 1];
