@@ -19,6 +19,17 @@ var raidReqs = [];
 var crucibleReqs = [];
 var pveReqs = [];
 
+var raidId = [];
+var crucibleId = [];
+var pveId = [];
+
+var raidWild = [];
+var crucibleWild = [];
+var pveWild = [];
+
+var raidor = [];
+var crucibleor = [];
+var pveor = [];
 
 client.on('ready', () => {
 	console.log("I am ready!");
@@ -39,22 +50,11 @@ client.on('message', message => {
 	//############################################
 	if(message.content.substr(0, 5) == 'modB!'){
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addReqs'){
-			var isAdmin = false;
-			for(i = 0; i < adminRoles.length; i++){
-				if(message.member.roles.find("name", adminRoles[i])){
-					isAdmin = true;
-				}
-			}
-			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
-				message.channel.send('Must be admin to modify lfg syntax requirements.')
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-				return;
-			}
+		    if (checkAdmin(message)) { return;}
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
 				case 'raid':
-					raidReqs.push(requirement);
+				    setupReq("raid");
 					message.channel.send('Added requirement to raid: ' + requirement)
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
@@ -86,18 +86,7 @@ client.on('message', message => {
 			}
 		}
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmReqs'){
-			var isAdmin = false;
-			for(i = 0; i < adminRoles.length; i++){
-				if(message.member.roles.find("name", adminRoles[i])){
-					isAdmin = true;
-				}
-			}
-			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
-				message.channel.send('Must be admin to modify lfg syntax requirements.')
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-				return;
-			}
+		    if (checkAdmin(message)) { return; }
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)){
 				case 'raid':
@@ -188,54 +177,21 @@ client.on('message', message => {
 				.catch(console.error);
 		}
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addAdminRole'){
-			var isAdmin = false;
-			for(i = 0; i < adminRoles.length; i++){
-				if(message.member.roles.find("name", adminRoles[i])){
-					isAdmin = true;
-				}
-			}
-			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
-				message.channel.send('Must be admin to modify admin roles.')
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-				return;
-			}
+		    if (checkAdmin(message)) { return; }
 			adminRoles.push(message.content.split(" ").pop());
 			message.channel.send('Added admin role: '  + message.content.split(" ").pop())
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmAdminRole'){
-			var isAdmin = false;
-			for(i = 0; i < adminRoles.length; i++){
-				if(message.member.roles.find("name", adminRoles[i])){
-					isAdmin = true;
-				}
-			}
-			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
-				message.channel.send('Must be admin to modify admin roles.')
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-				return;
-			}
+		    if (checkAdmin(message)) { return; }
 			adminRoles.splice(adminRoles.indexOf(message.content.split(" ").pop()), 1);
 			message.channel.send('Removed admin role: '  + message.content.split(" ").pop())
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setOrderMatters'){
-			var isAdmin = false;
-			for(i = 0; i < adminRoles.length; i++){
-				if(message.member.roles.find("name", adminRoles[i])){
-					isAdmin = true;
-				}
-			}
-			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
-				message.channel.send('Must be admin to modify lfg syntax requirements.')
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-				return;
-			}
+		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				orderMatters = true;
 				message.channel.send('Set orderMatters to true.')
@@ -253,19 +209,7 @@ client.on('message', message => {
 			}
 		}
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setHereRequired'){
-			var isAdmin = false;
-			for(i = 0; i < adminRoles.length; i++){
-				console.log('Checking if has ' + adminRoles[i]);
-				if(message.member.roles.find("name", adminRoles[i])){
-					isAdmin = true;
-				}
-			}
-			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
-				message.channel.send('Must be admin to modify lfg syntax requirements.')
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-				return;
-			}
+		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				hereRequired = true;
 				message.channel.send('Set hereRequired to true.')
@@ -283,18 +227,7 @@ client.on('message', message => {
 			}
 		}
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setAllowExtra'){
-			var isAdmin = false;
-			for(i = 0; i < adminRoles.length; i++){
-				if(message.member.roles.find("name", adminRoles[i])){
-					isAdmin = true;
-				}
-			}
-			if(!isAdmin && message.member.nickname != 'warhamercas#1366'){
-				message.channel.send('Must be admin to modify lfg syntax requirements.')
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-				return;
-			}
+		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				allowExtra = true;
 				message.channel.send('Set allowExtra to true.')
@@ -315,9 +248,9 @@ client.on('message', message => {
 	
 	//############################################
 	//-------------SYNTAX CHECKING----------------
-	//############################################
-	console.log("Raid channel: " + raidChannel.name); //TODO fix cant find raid channel bug.
-	if(message.channel == raidChannel){
+    //############################################
+
+	/*if(message.channel == raidChannel){
 		if(orderMatters){
 			if(allowExtra){
 				if(hereRequired){
@@ -355,7 +288,53 @@ client.on('message', message => {
 				
 			}
 		}
-	}
+	}*/
 });
+
+function setupReq(id) {
+    switch (id) {
+        case 'raid':
+            for (i = 0; i < raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
+                raidor[raidReqs.length - 1] = raidReqs[raidReqs.length - 1].split("||");
+            }
+            for (i = 0; i < raidor[raidReqs.length - 1].length; i++) {
+                if (raidor[raidReqs.length - 1][i].charAt(0) == '~') {
+                    if (raidor[raidReqs.length - 1][i].slice(-1) == '~') {
+                        raidId[raidReqs.length - 1][i] = "both";
+                    } else {
+                        raidId[raidReqs.length - 1][i] = "front";
+                    }
+                } else if (raidor[raidReqs.length - 1][i].slice(-1) == '~') {
+                    raidId[raidReqs.length - 1][i] = "end";
+                } else {
+                    raidId[raidReqs.length - 1][i] = "none";
+                }
+                for (a = 0; a < raidor[raidReqs.length - 1][i].split("*").length - 1; a++) {
+                    raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '*', a);
+                }
+            }
+            break;
+    }
+}
+
+function getPosition(string, subString, index) {
+    return string.split(subString, index).join(subString).length;
+}
+
+function checkAdmin(message) {
+    var isAdmin = false;
+    for (i = 0; i < adminRoles.length; i++) {
+        if (message.member.roles.find("name", adminRoles[i])) {
+            isAdmin = true;
+        }
+    }
+    if (!isAdmin && message.member.nickname != 'warhamercas#1366') {
+        message.channel.send('Must be admin to modify lfg syntax requirements.')
+            .then(message => console.log(`Sent message: ${message.content}`))
+            .catch(console.error);
+        return true;
+    }
+    return false;
+}
 
 client.login(process.env.BOT_TOKEN);
