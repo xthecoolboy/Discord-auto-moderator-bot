@@ -53,7 +53,8 @@ client.on('message', message => {
 		    if (checkAdmin(message)) { return;}
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
-				case 'raid':
+			    case 'raid':
+			        raidReqs.push(requirement);
 				    setupReq("raid");
 					message.channel.send('Added requirement to raid: ' + requirement)
 						.then(message => console.log(`Sent message: ${message.content}`))
