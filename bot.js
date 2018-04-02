@@ -349,7 +349,7 @@ client.on('message', message => {
 	//############################################
 	//-------------SYNTAX CHECKING----------------
 	//############################################
-	
+	console.log("Raid channel: " + raidChannel.name);
 	if(message.channel == raidChannel){
 		if(orderMatters){
 			if(allowExtra){
