@@ -31,6 +31,7 @@ client.on('message', message => {
 		crucibleChannel = currentGuild.channels.find("name", "lfg-crucible");
 		pveChannel = currentGuild.channels.find("name", "lfg-pve");
 		questionsChannel = currentGuild.channels.find("name", "lfg-questions");
+		foundGuild = true;
 	}
 	
 	//############################################
