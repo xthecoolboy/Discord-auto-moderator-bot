@@ -288,6 +288,7 @@ client.on('message', message => {
 		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setHereRequired'){
 			var isAdmin = false;
 			for(i = 0; i < adminRoles; i++){
+				console.log('Checking if has ' + adminRoles[i]);
 				if(!message.member.roles.find("name", adminRoles[i])){
 					isAdmin = true;
 				}
