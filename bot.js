@@ -319,11 +319,9 @@ function setupReq(id) {
                     raidId[raidReqs.length - 1][i] = "none";
                 }
                 raidWild[raidReqs.length - 1][i] = [];
-                console.log("Position: " + getPosition(raidReqs[raidReqs.length - 1], '*', 0));
-                console.log("Position + 1: " + getPosition(raidReqs[raidReqs.length - 1], '*', 1));
                 if (raidor[raidReqs.length - 1][i].includes("*")) {
                     for (a = 0; a < raidor[raidReqs.length - 1][i].split("*").length - 1; a++) {
-                        raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '*', a);
+                        raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '*', a+1);
                     }
                 }
             }
