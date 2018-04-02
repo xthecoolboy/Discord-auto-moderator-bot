@@ -269,12 +269,12 @@ client.on('message', message => {
 					.catch(console.error);
 				return;
 			}
-			if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'true'){
+			if(message.content.split(" ").pop()) == 'true'){
 				orderMatters = true;
 				message.channel.send('Set orderMatters to true.')
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
-			}else if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'false'){
+			}else if(message.content.split(" ").pop() == 'false'){
 				orderMatters = false;
 				message.channel.send('Set orderMatters to false.')
 					.then(message => console.log(`Sent message: ${message.content}`))
@@ -299,12 +299,12 @@ client.on('message', message => {
 					.catch(console.error);
 				return;
 			}
-			if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'true'){
+			if(message.content.split(" ").pop() == 'true'){
 				hereRequired = true;
 				message.channel.send('Set hereRequired to true.')
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
-			}else if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'false'){
+			}else if(message.content.split(" ").pop() == 'false'){
 				hereRequired = true;
 				message.channel.send('Set hereRequired to false.')
 					.then(message => console.log(`Sent message: ${message.content}`))
@@ -328,12 +328,12 @@ client.on('message', message => {
 					.catch(console.error);
 				return;
 			}
-			if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'true'){
+			if(message.content.split(" ").pop() == 'true'){
 				allowExtra = true;
 				message.channel.send('Set allowExtra to true.')
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
-			}else if(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1) == 'false'){
+			}else if(message.content.split(" ").pop() == 'false'){
 				allowExtra = true;
 				message.channel.send('Set allowExtra to false.')
 					.then(message => console.log(`Sent message: ${message.content}`))
