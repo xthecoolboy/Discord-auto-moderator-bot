@@ -299,18 +299,12 @@ client.on('message', message => {
 function setupReq(id) {
     switch (id) {
         case 'raid':
-            var rLength = raidReqs.length;
-            rLength -= 1;
-            console.log("RaidReqs length: " + raidReqs.length);
-            console.log("RaidReqs: " + raidReqs);
-            console.log("rLength: " + rLength);
-            console.log("rLength-1: " + (rLength - 1));
             if (raidReqs[raidReqs.length - 1].includes("||")) {
                 for (i = 0; i < raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
-                    raidor[rLength][i] = raidReqs[raidReqs.length - 1].split("||");
+                    raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||");
                 }
             } else {
-                raidor[rLength][0] = raidReqs[raidReqs.length - 1];
+                raidor[raidReqs.length - 1][0] = raidReqs[raidReqs.length - 1];
             }
             for (i = 0; i < raidor[raidReqs.length - 1].length; i++) {
                 if (raidor[raidReqs.length - 1][i].charAt(0) == '~') {
@@ -324,10 +318,13 @@ function setupReq(id) {
                 } else {
                     raidId[raidReqs.length - 1][i] = "none";
                 }
-                console.log(raidId[raidReqs.length - 1][i]);
-                for (a = 0; a < raidor[raidReqs.length - 1][i].split("*").length - 1; a++) {
-                    raidWild[raidReqs.length-1][i] = [];
-                    raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '*', a);
+                raidWild[raidReqs.length - 1][i] = [];
+                console.log("Position: " + getPosition(raidReqs[raidReqs.length - 1], '*', 0));
+                console.log("Position + 1: " + getPosition(raidReqs[raidReqs.length - 1], '*', 1));
+                if (raidor[raidReqs.length - 1][i].includes("*")) {
+                    for (a = 0; a < raidor[raidReqs.length - 1][i].split("*").length - 1; a++) {
+                        raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '*', a);
+                    }
                 }
             }
             break;
