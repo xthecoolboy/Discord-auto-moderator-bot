@@ -250,8 +250,12 @@ client.on('message', message => {
 	//-------------SYNTAX CHECKING----------------
     //############################################
 
-	/*if(message.channel == raidChannel){
-		if(orderMatters){
+	if (message.channel == raidChannel) {
+	    console.log("RaidReqs: " + raidReqs);
+	    console.log("RaidID: " + raidId);
+	    console.log("RaidWild: " + raidWild);
+	    console.log("Raidor: " + raidor);
+		/*if(orderMatters){
 			if(allowExtra){
 				if(hereRequired){
 					if(message.content.substr(0, message.content.indexOf(" ")) != '@here' && message.content.substr(0, message.content.indexOf(" ")) != '@everyone'){
@@ -287,8 +291,8 @@ client.on('message', message => {
 			}else{
 				
 			}
-		}
-	}*/
+		}*/
+	}
 });
 
 function setupReq(id) {
