@@ -299,8 +299,11 @@ client.on('message', message => {
 function setupReq(id) {
     switch (id) {
         case 'raid':
+            var rLength = raidReqs.length;
             console.log("RaidReqs length: " + raidReqs.length);
             console.log("RaidReqs: " + raidReqs);
+            console.log("rLength: " + rLength);
+            console.log("rLength-1: " + (rLength - 1));
             if (raidReqs[raidReqs.length - 1].includes("||")) {
                 for (i = 0; i < raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
                     raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||");
