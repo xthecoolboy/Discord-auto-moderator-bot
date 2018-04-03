@@ -506,7 +506,7 @@ function getSubstr(string, index) {
     if (index == 1) {
         return string.subString(0, string.indexOf(' '));
     }
-    return string.substr(getPosition(string, ' ', index-1), getPosition(string, ' ', index) - getPosition(string, ' ', index-1));
+    return string.substr(getPosition(string, ' ', index-1)+1, getPosition(string, ' ', index) - getPosition(string, ' ', index-1)-1);
 }
 
 function checkAdmin(message) {
