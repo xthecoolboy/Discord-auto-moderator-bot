@@ -65,21 +65,21 @@ client.on('message', message => {
 			    case 'raid':
 			        raidReqs.push(requirement);
 				    setupReq("raid");
-					message.channel.send('Added requirement to raid: ' + requirement)
+			        message.channel.send('Added requirement to raid: ' + requirement, {code:true})
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'crucible':
 				    crucibleReqs.push(requirement);
 				    setupReq("crucible");
-					message.channel.send('Added requirement to crucible: ' + requirement)
+				    message.channel.send('Added requirement to crucible: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'pve':
 				    pveReqs.push(requirement);
 				    setupReq("pve");
-					message.channel.send('Added requirement to pve: ' + requirement)
+				    message.channel.send('Added requirement to pve: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
@@ -88,12 +88,12 @@ client.on('message', message => {
 					crucibleReqs.push(requirement);
 					pveReqs.push(requirement);
 					setupReq("all");
-					message.channel.send('Added requirement to all: ' + requirement)
+				    message.channel.send('Added requirement to all: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				default:
-					message.channel.send('Usage: modB!addreqs raid/crucible/pve/all <requirement>. "All" will set this requirement to all lfg chats.')
+				    message.channel.send('Usage: modB!addreqs raid/crucible/pve/all <requirement>.' + '\r\n' + '"All" will set this requirement to all lfg chats.', { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 			}
@@ -104,102 +104,84 @@ client.on('message', message => {
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)){
 				case 'raid':
 					if(raidReqs.indexOf(requirement) == -1){
-						message.channel.send('Could not find requirement in lfg-raid: ' + requirement)
+					    message.channel.send('Could not find requirement in lfg-raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
 						raidReqs.splice(raidReqs.indexOf(requirement), 1);
-						message.channel.send('Removed requirement from raid: ' + requirement)
+					    message.channel.send('Removed requirement from raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}
 					break;
 				case 'crucible':
 					if(crucibleReqs.indexOf(requirement) == -1){
-						message.channel.send('Could not find requirement in lfg-crucible: ' + requirement)
+					    message.channel.send('Could not find requirement in lfg-crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
 						crucibleReqs.splice(raidReqs.indexOf(requirement), 1);
-						message.channel.send('Removed requirement from crucible: ' + requirement)
+					    message.channel.send('Removed requirement from crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}
 					break;
 				case 'pve':
 					if(pveReqs.indexOf(requirement) == -1){
-						message.channel.send('Could not find requirement in lfg-pve: ' + requirement)
+					    message.channel.send('Could not find requirement in lfg-pve: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
 						pveReqs.splice(raidReqs.indexOf(requirement), 1);
-						message.channel.send('Removed requirement from crucible: ' + requirement)
+					    message.channel.send('Removed requirement from crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}
 					break;
 				case 'all':
 					if(raidReqs.indexOf(requirement) == -1){
-						message.channel.send('Could not find requirement in lfg-raid: ' + requirement)
+					    message.channel.send('Could not find requirement in lfg-raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else if(crucibleReqs.indexOf(requirement) == -1){
-						message.channel.send('Could not find requirement in lfg-crucible: ' + requirement)
+					    message.channel.send('Could not find requirement in lfg-crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else if(pveReqs.indexOf(requirement) == -1){
-						message.channel.send('Could not find requirement in lfg-pve: ' + requirement)
+					    message.channel.send('Could not find requirement in lfg-pve: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
 						raidReqs.splice(raidReqs.indexOf(requirement), 1);
 						crucibleReqs.splice(raidReqs.indexOf(requirement), 1);
 						pveReqs.splice(raidReqs.indexOf(requirement), 1);
-						message.channel.send('Removed requirement from all: ' + requirement)
+					    message.channel.send('Removed requirement from all: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}
 					break;
 				default:
-					message.channel.send('Usage: modB!rmReqs raid/crucible/pve/all <requirement>. "All" will remove this requirement in all lfg chats.')
+				    message.channel.send('Usage: modB!rmReqs raid/crucible/pve/all <requirement>.' + '\r\n' + '"All" will remove this requirement in all lfg chats.', { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 			}
 		}
 		if(message.content.split(cmds[0].slice(-1)).pop() == cmds[3]){
-			message.channel.send('Requirements:')
-				.then(message => console.log(`Sent message: ${message.content}`))
-				.catch(console.error);
-			message.channel.send('Order matters: ' + orderMatters)
-				.then(message => console.log(`Sent message: ${message.content}`))
-				.catch(console.error);
-			message.channel.send('@ here required: ' + hereRequired)
-				.then(message => console.log(`Sent message: ${message.content}`))
-				.catch(console.error);
-			message.channel.send('Allow extra text: ' + allowExtra)
-				.then(message => console.log(`Sent message: ${message.content}`))
-				.catch(console.error);
-			message.channel.send('lfg-raid requirements: ' + raidReqs)
-				.then(message => console.log(`Sent message: ${message.content}`))
-				.catch(console.error);
-			message.channel.send('lfg-crucible requirements: ' + crucibleReqs)
-				.then(message => console.log(`Sent message: ${message.content}`))
-				.catch(console.error);
-			message.channel.send('lfg-pve requirements: ' + pveReqs)
+		    message.channel.send('Requirements:' + '\r\n' + 'Order matters: ' + orderMatters + '\r\n' + '@here required: ' + hereRequired + '\r\n' + 'Allow extra text: ' + allowExtra + '\r\n' + 'lfg-raid requirements: ' + raidReqs + '\r\n' + 'lfg-crucible requirements: ' + crucibleReqs + '\r\n' + 'lfg-pve requirements: ' + pveReqs, { code: true, disableEveryone: true, split: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
 		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[4]) {
 		    if (checkAdmin(message)) { return; }
 			adminRoles.push(message.content.split(" ").pop());
-			message.channel.send('Added admin role: '  + message.content.split(" ").pop())
+		    message.channel.send('Added admin role: ' + message.content.split(" ").pop(), {code:true})
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
 		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[5]) {
 		    if (checkAdmin(message)) { return; }
 			adminRoles.splice(adminRoles.indexOf(message.content.split(" ").pop()), 1);
-			message.channel.send('Removed admin role: '  + message.content.split(" ").pop())
+		    message.channel.send('Removed admin role: ' + message.content.split(" ").pop(), { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
@@ -207,16 +189,16 @@ client.on('message', message => {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				orderMatters = true;
-				message.channel.send('Set orderMatters to true.')
+			    message.channel.send('Set orderMatters to true.', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}else if(message.content.split(" ").pop() == 'false'){
 				orderMatters = false;
-				message.channel.send('Set orderMatters to false.')
+			    message.channel.send('Set orderMatters to false.', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}else{
-				message.channel.send('Usage: modB!setOrderMatters true/false')
+			    message.channel.send('Usage: modB!setOrderMatters true/false', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}
@@ -225,16 +207,16 @@ client.on('message', message => {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				hereRequired = true;
-				message.channel.send('Set hereRequired to true.')
+			    message.channel.send('Set hereRequired to true.', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}else if(message.content.split(" ").pop() == 'false'){
 				hereRequired = true;
-				message.channel.send('Set hereRequired to false.')
+			    message.channel.send('Set hereRequired to false.', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}else{
-				message.channel.send('Usage: modB!setHereRequired true/false')
+			    message.channel.send('Usage: modB!setHereRequired true/false', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}
@@ -243,16 +225,16 @@ client.on('message', message => {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				allowExtra = true;
-				message.channel.send('Set allowExtra to true.')
+			    message.channel.send('Set allowExtra to true.', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}else if(message.content.split(" ").pop() == 'false'){
 				allowExtra = true;
-				message.channel.send('Set allowExtra to false.')
+			    message.channel.send('Set allowExtra to false.', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}else{
-				message.channel.send('Usage: modB!setAllowExtra true/false')
+			    message.channel.send('Usage: modB!setAllowExtra true/false', { code: true })
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}
