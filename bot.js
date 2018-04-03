@@ -32,6 +32,7 @@ var crucibleor = [[],[]];
 var pveor = [[], []];
 
 var cmds = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setOrderMatters', 'setHereRequired', 'setAllowExtra', 'setCmd', 'commands'];
+const cmdsReset = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setOrderMatters', 'setHereRequired', 'setAllowExtra', 'setCmd', 'commands'];
 
 client.on('ready', () => {
 	console.log("I am ready!");
@@ -51,7 +52,12 @@ client.on('message', message => {
 	//----------------COMMANDS--------------------
 	//############################################
 	if (message.content.substr(0, cmds[0].length) == cmds[0]) {
-
+	    if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == 'resetCommands') {
+	        cmds = cmdsReset;
+	        message.channel.send('Reset commands to: ' + cmds, { code: true })
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+	    }
 		if(message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[1]){
 		    if (checkAdmin(message)) { return;}
 			var requirement = message.content.split(" ").pop();
@@ -254,12 +260,14 @@ client.on('message', message => {
 		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[9]) {
 		    if (checkAdmin(message)) { return; }
 		    cmds[cmds.indexOf(getSubstr(message.content, 2))] = getSubstr(message.content, 3);
-		    console.log('First keyword: ' + getSubstr(message.content, 2));
-		    console.log('Second keyword: ' + getSubstr(message.content, 3));
-		    console.log('Commands: ' + cmds);
+		    message.channel.send('Set command ' + getSubstr(message.content, 2) + ' to: ' + getSubstr(message.content, 3), { code: true })
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
 		}
 		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[10]) {
-
+		    message.channel.send('Commands: ' + '\r\n' + 'resetCommands(unchangable),' + cmds, {code:true})
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
 		}
 	}
 	
