@@ -29,7 +29,9 @@ var pveWild = [[], []];
 
 var raidor = [[],[]];
 var crucibleor = [[],[]];
-var pveor = [[],[]];
+var pveor = [[], []];
+
+var cmds = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setOrderMatters', 'setHereRequired', 'setAllowExtra', 'setCmd', 'commands'];
 
 client.on('ready', () => {
 	console.log("I am ready!");
@@ -48,8 +50,9 @@ client.on('message', message => {
 	//############################################
 	//----------------COMMANDS--------------------
 	//############################################
-	if(message.content.substr(0, 5) == 'modB!'){
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addReqs'){
+	if (message.content.substr(0, cmds[0].length) == cmds[0]) {
+
+		if(message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[1]){
 		    if (checkAdmin(message)) { return;}
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
@@ -89,7 +92,7 @@ client.on('message', message => {
 						.catch(console.error);
 			}
 		}
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmReqs'){
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[2]) {
 		    if (checkAdmin(message)) { return; }
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)){
@@ -157,7 +160,7 @@ client.on('message', message => {
 						.catch(console.error);
 			}
 		}
-		if(message.content.split("!").pop() == 'listReqs'){
+		if(message.content.split(cmds[0].slice(-1)).pop() == cmds[3]){
 			message.channel.send('Requirements:')
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
@@ -180,21 +183,21 @@ client.on('message', message => {
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'addAdminRole'){
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[4]) {
 		    if (checkAdmin(message)) { return; }
 			adminRoles.push(message.content.split(" ").pop());
 			message.channel.send('Added admin role: '  + message.content.split(" ").pop())
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'rmAdminRole'){
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[5]) {
 		    if (checkAdmin(message)) { return; }
 			adminRoles.splice(adminRoles.indexOf(message.content.split(" ").pop()), 1);
 			message.channel.send('Removed admin role: '  + message.content.split(" ").pop())
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setOrderMatters'){
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[6]) {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				orderMatters = true;
@@ -212,7 +215,7 @@ client.on('message', message => {
 					.catch(console.error);
 			}
 		}
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setHereRequired'){
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[7]) {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				hereRequired = true;
@@ -230,7 +233,7 @@ client.on('message', message => {
 					.catch(console.error);
 			}
 		}
-		if(message.content.substr(5, message.content.indexOf(" ") - 5) == 'setAllowExtra'){
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[8]) {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				allowExtra = true;
@@ -248,17 +251,37 @@ client.on('message', message => {
 					.catch(console.error);
 			}
 		}
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[9]) {
+		    if (checkAdmin(message)) { return; }
+		    cmds[getSubstr(message.content, 2)] = getSubstr(message.content, 3);
+		    console.log('Set new command: ' + cmds[getSubstr(message.content, 3)]);
+		}
+		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[10]) {
+
+		}
 	}
 	
 	//############################################
 	//-------------SYNTAX CHECKING----------------
     //############################################
+	if(hereRequired && orderMatters){
+	    if(message.content.substr(0, message.content.indexOf(' ')) != '@here' && message.content.substr(0, message.content.indexOf(' ')) != '@everyone'){
+	        message.member.user.createDM()
+				.then(dm => dm.send('@here must be the first thing in the lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
+				.catch(console.error);
+	        return;
+	    }
+	}else if(hereRequired && !orderMatters){
+	    if(!message.content.includes('@here') && !message.content.includes('@everyone')){
+	        message.member.user.createDM()
+				.then(dm => dm.send('@here is required somewhere in the destiny lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
+				.catch(console.error);
+	        return;
+	    }
+	}
 
-	if (message.channel == raidChannel) {
-	    console.log("RaidReqs: " + raidReqs);
-	    console.log("RaidID: " + raidId);
-	    console.log("RaidWild: " + raidWild);
-	    console.log("Raidor: " + raidor);
+	if (message.channel == raidChannel && orderMatters) {
+
 		/*if(orderMatters){
 			if(allowExtra){
 				if(hereRequired){
@@ -296,6 +319,8 @@ client.on('message', message => {
 				
 			}
 		}*/
+	} else if (message.channel == raidChannel && !orderMatters) {
+
 	}
 });
 
@@ -470,6 +495,16 @@ function setupReq(id) {
 
 function getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
+}
+
+function getSubstr(string, index) {
+    if (index == string.split(' ').length - 1) {
+        return string.split(' ').pop();
+    }
+    if (index == 1) {
+        return string.subString(0, string.indexOf(' '));
+    }
+    return string.substr(getPosition(string, ' ', index), getPosition(string, ' ', index + 1) - getPosition(string, ' ', index));
 }
 
 function checkAdmin(message) {
