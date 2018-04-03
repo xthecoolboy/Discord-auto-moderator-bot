@@ -254,7 +254,7 @@ client.on('message', message => {
 		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[9]) {
 		    if (checkAdmin(message)) { return; }
 		    cmds[getSubstr(message.content, 2)] = getSubstr(message.content, 3);
-		    console.log('Set new command: ' + cmds[getSubstr(message.content, 3)]);
+		    console.log('Commands: ' + cmds);
 		}
 		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[10]) {
 
