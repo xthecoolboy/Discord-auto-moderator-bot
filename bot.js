@@ -500,7 +500,7 @@ function getPosition(string, subString, index) {
 }
 
 function getSubstr(string, index) {
-    if (index == string.split(' ').length - 1) {
+    if (index == string.split(' ').length) {
         return string.split(' ').pop();
     }
     if (index == 1) {
