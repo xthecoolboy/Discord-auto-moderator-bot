@@ -113,53 +113,53 @@ client.on('message', message => {
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
-					    raidReqs.splice(raidReqs.indexOf(new RegExp(requirement, 'i')), 1);
+					    raidReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
 					    message.channel.send('Removed requirement from raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}
 					break;
 				case 'crucible':
-				    if (crucibleReqs.indexOf(new RegExp(requirement, 'i')) == -1) {
+				    if (crucibleReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
-				        crucibleReqs.splice(raidReqs.indexOf(new RegExp(requirement, 'i')), 1);
+				        crucibleReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
 					    message.channel.send('Removed requirement from crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}
 					break;
 				case 'pve':
-				    if (pveReqs.indexOf(new RegExp(requirement, 'i')) == -1) {
+				    if (pveReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-pve: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
-				        pveReqs.splice(raidReqs.indexOf(new RegExp(requirement, 'i')), 1);
+				        pveReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
 					    message.channel.send('Removed requirement from crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}
 					break;
 				case 'all':
-				    if (raidReqs.indexOf(new RegExp(requirement, 'i')) == -1) {
+				    if (raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
-				    } else if (crucibleReqs.indexOf(new RegExp(requirement, 'i')) == -1) {
+				    } else if (crucibleReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
-				    } else if (pveReqs.indexOf(new RegExp(requirement, 'i')) == -1) {
+				    } else if (pveReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-pve: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
-				        raidReqs.splice(raidReqs.indexOf(new RegExp(requirement, 'i')), 1);
-				        crucibleReqs.splice(raidReqs.indexOf(new RegExp(requirement, 'i')), 1);
-				        pveReqs.splice(raidReqs.indexOf(new RegExp(requirement, 'i')), 1);
+				        raidReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
+				        crucibleReqs.splice(crucibleReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
+				        pveReqs.splice(pveReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
 					    message.channel.send('Removed requirement from all: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
