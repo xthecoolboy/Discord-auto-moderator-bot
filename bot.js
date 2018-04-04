@@ -254,14 +254,10 @@ client.on('message', message => {
 	//############################################
 	//-------------SYNTAX CHECKING----------------
     //############################################
-	if(message.mentions.members != null){
-	    questionsChannel.send(message.content, {reply:message.author})
-			.then(message => console.log(`Sent message: ${message.content}`))
-			.catch(console.error);
-	}
+	console.log('Members: ' + message.mentions.members);
 
 	if(hereRequired){
-	    if(message.content.substr(0, message.content.indexOf(' ')) != '@here' && message.content.substr(0, message.content.indexOf(' ')) != '@everyone'){
+	    if(!message.mentions.everyone){
 	        message.member.user.createDM()
 				.then(dm => dm.send('@here must be the first thing in the lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 				.catch(console.error);
@@ -270,6 +266,12 @@ client.on('message', message => {
 	}
 
 	if (message.channel == raidChannel) {
+	    if (message.mentions.members != null) {
+	        questionsChannel.send(message.content, { reply: message.author })
+                .then(message => console.log(`Sent message: ${message.content}`))
+                .catch(console.error);
+	        return;
+	    }
 	    for (i = 0; i < raidReqs.length; i++) {
 	        if(!message.content.test(raidReqs[i])){
 	            message.member.user.createDM()
