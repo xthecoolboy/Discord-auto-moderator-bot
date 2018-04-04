@@ -171,7 +171,7 @@ client.on('message', message => {
 			}
 		}
 		if(message.content.split(cmds[0].slice(-1)).pop() == cmds[3]){
-		    message.channel.send('Requirements:' + '\r\n' + '@here required: ' + hereRequired + '\r\n' + 'lfg-raid requirements: ' + raidReqs + '\r\n' + 'lfg-crucible requirements: ' + crucibleReqs + '\r\n' + 'lfg-pve requirements: ' + pveReqs, { code: true, disableEveryone: true, split: true })
+		    message.channel.send('Requirements:' + '\r\n' + '@here required: ' + hereRequired + '\r\n' + 'lfg-raid requirements: ' + raidReqs.toString().replace(',', ', ') + '\r\n' + 'lfg-crucible requirements: ' + crucibleReqs.toString().replace(',', ', ') + '\r\n' + 'lfg-pve requirements: ' + pveReqs.toString().replace(',', ', '), { code: true, disableEveryone: true, split: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
