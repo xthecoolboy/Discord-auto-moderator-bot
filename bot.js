@@ -11,8 +11,6 @@ var currentGuild;
 var foundGuild = false;
 
 var hereRequired = false;
-var orderMatters = false;
-var allowExtra = true;
 var adminRoles = ["LEADERSHIP"];
 
 var raidReqs = [];
@@ -31,8 +29,8 @@ var raidor = [[],[]];
 var crucibleor = [[],[]];
 var pveor = [[], []];
 
-var cmds = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setOrderMatters', 'setHereRequired', 'setAllowExtra', 'setCmd', 'commands'];
-const cmdsReset = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setOrderMatters', 'setHereRequired', 'setAllowExtra', 'setCmd', 'commands'];
+var cmds = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault'];
+const cmdsReset = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault'];
 
 client.on('ready', () => {
 	console.log("I am ready!");
@@ -63,31 +61,31 @@ client.on('message', message => {
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
 			    case 'raid':
-			        raidReqs.push(requirement);
-				    setupReq("raid");
+			        raidReqs.push(new RegExp(requirement, "i"));
+				    //setupReq("raid");
 			        message.channel.send('Added requirement to raid: ' + requirement, {code:true})
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'crucible':
-				    crucibleReqs.push(requirement);
-				    setupReq("crucible");
+				    crucibleReqs.push(new RegExp(requirement, "i"));
+				    //setupReq("crucible");
 				    message.channel.send('Added requirement to crucible: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'pve':
-				    pveReqs.push(requirement);
-				    setupReq("pve");
+				    pveReqs.push(new RegExp(requirement, "i"));
+				    //setupReq("pve");
 				    message.channel.send('Added requirement to pve: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'all':
-					raidReqs.push(requirement);
-					crucibleReqs.push(requirement);
-					pveReqs.push(requirement);
-					setupReq("all");
+				    raidReqs.push(new RegExp(requirement, "i"));
+				    crucibleReqs.push(new RegExp(requirement, "i"));
+				    pveReqs.push(new RegExp(requirement, "i"));
+					//setupReq("all");
 				    message.channel.send('Added requirement to all: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
@@ -185,7 +183,7 @@ client.on('message', message => {
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[6]) {
+		/*if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[6]) {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				orderMatters = true;
@@ -202,8 +200,8 @@ client.on('message', message => {
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}
-		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[7]) {
+		}*/
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[6]) {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				hereRequired = true;
@@ -221,7 +219,7 @@ client.on('message', message => {
 					.catch(console.error);
 			}
 		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[8]) {
+		/*if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[8]) {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				allowExtra = true;
@@ -238,15 +236,15 @@ client.on('message', message => {
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}
-		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[9]) {
+		}*/
+		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[7]) {
 		    if (checkAdmin(message)) { return; }
 		    cmds[cmds.indexOf(getSubstr(message.content, 2))] = getSubstr(message.content, 3);
 		    message.channel.send('Set command ' + getSubstr(message.content, 2) + ' to: ' + getSubstr(message.content, 3), { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
-		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[10]) {
+		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[8]) {
 		    message.channel.send('Commands: ' + '\r\n' + 'resetCommands(unchangable),' + cmds, {code:true})
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
@@ -256,68 +254,54 @@ client.on('message', message => {
 	//############################################
 	//-------------SYNTAX CHECKING----------------
     //############################################
-	if(hereRequired && orderMatters){
+	if(message.mentions.members != null){
+	    questionsChannel.send(message.content, {reply:message.author})
+			.then(message => console.log(`Sent message: ${message.content}`))
+			.catch(console.error);
+	}
+
+	if(hereRequired){
 	    if(message.content.substr(0, message.content.indexOf(' ')) != '@here' && message.content.substr(0, message.content.indexOf(' ')) != '@everyone'){
 	        message.member.user.createDM()
 				.then(dm => dm.send('@here must be the first thing in the lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 				.catch(console.error);
 	        return;
 	    }
-	}else if(hereRequired && !orderMatters){
-	    if(!message.content.includes('@here') && !message.content.includes('@everyone')){
-	        message.member.user.createDM()
-				.then(dm => dm.send('@here is required somewhere in the destiny lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
-				.catch(console.error);
-	        return;
-	    }
 	}
 
-	if (message.channel == raidChannel && orderMatters) {
-
-		/*if(orderMatters){
-			if(allowExtra){
-				if(hereRequired){
-					if(message.content.substr(0, message.content.indexOf(" ")) != '@here' && message.content.substr(0, message.content.indexOf(" ")) != '@everyone'){
-						
-					}
-				}
-			}
-		}else{
-			if(allowExtra){
-				if(hereRequired){
-					if(!message.content.includes("@here") && !message.content.includes("@everyone")){
-						message.member.user.createDM()
-							.then(dm => dm.send('@here is required somewhere in the lfg messages.', {disableEveryone:true,split:true,code:true}).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
-							.catch(console.error);
-					}else{
-						for(i = 0; i < raidReqs.length; i++){
-							if(raidReqs[i].includes("*")){
-								var req1 = raidReqs[i].substr(0, raidReqs.indexOf("*"));
-								var req2 = raidReqs[i].split("*").pop();
-								if(req1.charAt(0) == '~'){
-									req1 = req1.substr(1);
-								}
-								if(req2.charAt(req2.length) == '~'){
-									req2 = req2.slice(0, -1);
-								}
-								if(!message.content.includes(req1) || !message.content.includes(req2) || message.content.indexOf(req1) + req1.length != message.content.indexOf(req2) - 1){
-									
-								}
-							}
-						}
-					}
-				}
-			}else{
-				
-			}
-		}*/
-	} else if (message.channel == raidChannel && !orderMatters) {
-
+	if (message.channel == raidChannel) {
+	    for (i = 0; i < raidReqs.length; i++) {
+	        if(!message.content.test(raidReqs[i])){
+	            message.member.user.createDM()
+				    .then(dm => dm.send('Destiny raid LFG messages must be in this syntax: ' + '\r\n' + raidReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
+				    .catch(console.error);
+	            return;
+	        }
+	    }
+	} else if (message.channel == crucibleChannel) {
+	    for (i = 0; i < crucibleReqs.length; i++) {
+	        if (!message.content.test(crucibleReqs[i])) {
+	            message.member.user.createDM()
+				    .then(dm => dm.send('Destiny crucible LFG messages must be in this syntax: ' + '\r\n' + crucibleReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
+				    .catch(console.error);
+	            return;
+	        }
+	    }
+	} else if (message.channel == pveChannel) {
+	    for (i = 0; i < pveReqs.length; i++) {
+	        if (!message.content.test(pveReqs[i])) {
+	            message.member.user.createDM()
+				    .then(dm => dm.send('Destiny PvE LFG messages must be in this syntax: ' + '\r\n' + pveReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
+				    .catch(console.error);
+	            return;
+	        }
+	    }
 	}
 });
 
 function setupReq(id) {
-    switch (id) {
+    
+    /*switch (id) {
         case 'raid':
             if (raidReqs[raidReqs.length - 1].includes("||")) {
                 for (i = 0; i <= raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
@@ -482,7 +466,7 @@ function setupReq(id) {
                 }
             }
             break;
-    }
+    }*/
 }
 
 function getPosition(string, subString, index) {
@@ -513,6 +497,15 @@ function checkAdmin(message) {
         return true;
     }
     return false;
+}
+
+function sendSyntax(user, id) {
+    switch (id) {
+        case 0:
+            message.member.user.createDM()
+				.then(dm => dm.send('Destiny raid LFG messages must be in this syntax: ' + '\r\n' + raidReqs.toString().replace(',', ' '), { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
+				.catch(console.error);
+    }
 }
 
 client.login(process.env.BOT_TOKEN);
