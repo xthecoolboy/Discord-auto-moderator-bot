@@ -108,7 +108,7 @@ client.on('message', message => {
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)){
 				case 'raid':
-				    if (raidReqs.indexOf(new RegExp(requirement, 'i')) == -1) {
+				    if (raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
