@@ -31,9 +31,15 @@ var pveor = [[], []];
 
 var cmds = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault'];
 const cmdsReset = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault'];
+const raidDefaults = [new RegExp('LF[1-5]M|LFG', 'i'), new RegExp('prestige|prest|prest.|normal|anything', 'i'), new RegExp('levi|leviathan|raid|eow|lair|raid lair', 'i'), new RegExp('https://discord.gg/|CR[1-4]', 'i')];
+const crucibleDefaults = [new RegExp('LF[1-4]M|LFG', 'i'), new RegExp('trials|crucible|pvp|quickplay|quick|anything', 'i'), new RegExp('https://discord.gg/|CC[1-5]', 'i')];
+const pveDefaults = [new RegExp('LF[1-5]M|LFG', 'i'), new RegExp('prestige|prest|prest.|normal|anything', 'i'), new RegExp('levi|leviathan|raid|eow|lair|raid lair', 'i'), new RegExp('https://discord.gg/|CS[1-4]', 'i')];
 
 client.on('ready', () => {
-	console.log("I am ready!");
+    console.log("I am ready!");
+    raidReqs = raidDefaults;
+    crucibleReqs = crucibleDefaults;
+    pveReqs = pveDefaults;
 });
 
 client.on('message', message => {
@@ -249,6 +255,16 @@ client.on('message', message => {
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}
+		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[9]) {
+		    if(checkAdmin){return;}
+            raidReqs = raidDefaults;
+            crucibleReqs = crucibleDefaults;
+            pveReqs = pveDefaults;
+            message.channel.send('Set syntax back to defaults.', { code: true })
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+		}
+
 	}
 	
 	//############################################
