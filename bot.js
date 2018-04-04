@@ -254,8 +254,6 @@ client.on('message', message => {
 	//############################################
 	//-------------SYNTAX CHECKING----------------
     //############################################
-	console.log('Members: ' + message.mentions.members.array());
-    console.log(message.mentions.members.array() == '')
 
 	if(hereRequired){
 	    if(!message.mentions.everyone){
@@ -267,7 +265,7 @@ client.on('message', message => {
 	}
 
 	if (message.channel == raidChannel) {
-	    if (message.mentions.members != null) {
+	    if (message.mentions.members.array() != '') {
 	        questionsChannel.send(message.content, { reply: message.author })
                 .then(message => console.log(`Sent message: ${message.content}`))
                 .catch(console.error);
@@ -282,6 +280,12 @@ client.on('message', message => {
 	        }
 	    }
 	} else if (message.channel == crucibleChannel) {
+	    if (message.mentions.members.array() != '') {
+	        questionsChannel.send(message.content, { reply: message.author })
+                .then(message => console.log(`Sent message: ${message.content}`))
+                .catch(console.error);
+	        return;
+	    }
 	    for (i = 0; i < crucibleReqs.length; i++) {
 	        if (!message.content.test(crucibleReqs[i])) {
 	            message.member.user.createDM()
@@ -291,6 +295,12 @@ client.on('message', message => {
 	        }
 	    }
 	} else if (message.channel == pveChannel) {
+	    if (message.mentions.members.array() != '') {
+	        questionsChannel.send(message.content, { reply: message.author })
+                .then(message => console.log(`Sent message: ${message.content}`))
+                .catch(console.error);
+	        return;
+	    }
 	    for (i = 0; i < pveReqs.length; i++) {
 	        if (!message.content.test(pveReqs[i])) {
 	            message.member.user.createDM()
@@ -302,175 +312,6 @@ client.on('message', message => {
 	}
 });
 
-function setupReq(id) {
-    
-    /*switch (id) {
-        case 'raid':
-            if (raidReqs[raidReqs.length - 1].includes("||")) {
-                for (i = 0; i <= raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
-                    raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||")[i];
-                }
-            } else {
-                raidor[raidReqs.length - 1][0] = raidReqs[raidReqs.length - 1];
-            }
-            for (i = 0; i < raidor[raidReqs.length - 1].length; i++) {
-                if (raidor[raidReqs.length - 1][i].charAt(0) == '~') {
-                    if (raidor[raidReqs.length - 1][i].slice(-1) == '~') {
-                        raidId[raidReqs.length - 1][i] = "both";
-                    } else {
-                        raidId[raidReqs.length - 1][i] = "front";
-                    }
-                } else if (raidor[raidReqs.length - 1][i].slice(-1) == '~') {
-                    raidId[raidReqs.length - 1][i] = "end";
-                } else {
-                    raidId[raidReqs.length - 1][i] = "none";
-                }
-                raidWild[raidReqs.length - 1][i] = [];
-                if (raidor[raidReqs.length - 1][i].includes("$")) {
-                    for (a = 0; a <= raidor[raidReqs.length - 1][i].split("$").length - 1; a++) {
-                        raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '$', a+1);
-                    }
-                }
-            }
-            break;
-        case 'crucible':
-            if (crucibleReqs[crucibleReqs.length - 1].includes("||")) {
-                for (i = 0; i <= crucibleReqs[crucibleReqs.length - 1].split("||").length - 1; i++) {
-                    crucibleor[crucibleReqs.length - 1][i] = crucibleReqs[crucibleReqs.length - 1].split("||")[i];
-                }
-            } else {
-                crucibleor[crucibleReqs.length - 1][0] = crucibleReqs[crucibleReqs.length - 1];
-            }
-            for (i = 0; i < crucibleor[crucibleReqs.length - 1].length; i++) {
-                if (crucibleor[crucibleReqs.length - 1][i].charAt(0) == '~') {
-                    if (crucibleor[crucibleReqs.length - 1][i].slice(-1) == '~') {
-                        crucibleId[crucibleReqs.length - 1][i] = "both";
-                    } else {
-                        crucibleId[crucibleReqs.length - 1][i] = "front";
-                    }
-                } else if (crucibleor[crucibleReqs.length - 1][i].slice(-1) == '~') {
-                    crucibleId[crucibleReqs.length - 1][i] = "end";
-                } else {
-                    crucibleId[crucibleReqs.length - 1][i] = "none";
-                }
-                crucibleWild[crucibleReqs.length - 1][i] = [];
-                if (crucibleor[crucibleReqs.length - 1][i].includes("$")) {
-                    for (a = 0; a <= crucibleor[crucibleReqs.length - 1][i].split("$").length - 1; a++) {
-                        crucibleWild[crucibleReqs.length - 1][i][a] = getPosition(crucibleReqs[crucibleReqs.length - 1], '$', a + 1);
-                    }
-                }
-            }
-            break;
-        case 'pve':
-            if (pveReqs[pveReqs.length - 1].includes("||")) {
-                for (i = 0; i <= pveReqs[pveReqs.length - 1].split("||").length - 1; i++) {
-                    pveor[pveReqs.length - 1][i] = pveReqs[pveReqs.length - 1].split("||")[i];
-                }
-            } else {
-                pveor[pveReqs.length - 1][0] = pveReqs[pveReqs.length - 1];
-            }
-            for (i = 0; i < pveor[pveReqs.length - 1].length; i++) {
-                if (pveor[pveReqs.length - 1][i].charAt(0) == '~') {
-                    if (pveor[pveReqs.length - 1][i].slice(-1) == '~') {
-                        pveId[pveReqs.length - 1][i] = "both";
-                    } else {
-                        pveId[pveReqs.length - 1][i] = "front";
-                    }
-                } else if (pveor[pveReqs.length - 1][i].slice(-1) == '~') {
-                    pveId[pveReqs.length - 1][i] = "end";
-                } else {
-                    pveId[pveReqs.length - 1][i] = "none";
-                }
-                pveWild[pveReqs.length - 1][i] = [];
-                if (pveor[pveReqs.length - 1][i].includes("$")) {
-                    for (a = 0; a <= pveor[pveReqs.length - 1][i].split("$").length - 1; a++) {
-                        pveWild[pveReqs.length - 1][i][a] = getPosition(pveReqs[pveReqs.length - 1], '$', a + 1);
-                    }
-                }
-            }
-            break;
-        case 'all':
-            if (raidReqs[raidReqs.length - 1].includes("||")) {
-                for (i = 0; i <= raidReqs[raidReqs.length - 1].split("||").length - 1; i++) {
-                    raidor[raidReqs.length - 1][i] = raidReqs[raidReqs.length - 1].split("||")[i];
-                }
-            } else {
-                raidor[raidReqs.length - 1][0] = raidReqs[raidReqs.length - 1];
-            }
-            for (i = 0; i < raidor[raidReqs.length - 1].length; i++) {
-                if (raidor[raidReqs.length - 1][i].charAt(0) == '~') {
-                    if (raidor[raidReqs.length - 1][i].slice(-1) == '~') {
-                        raidId[raidReqs.length - 1][i] = "both";
-                    } else {
-                        raidId[raidReqs.length - 1][i] = "front";
-                    }
-                } else if (raidor[raidReqs.length - 1][i].slice(-1) == '~') {
-                    raidId[raidReqs.length - 1][i] = "end";
-                } else {
-                    raidId[raidReqs.length - 1][i] = "none";
-                }
-                raidWild[raidReqs.length - 1][i] = [];
-                if (raidor[raidReqs.length - 1][i].includes("$")) {
-                    for (a = 0; a <= raidor[raidReqs.length - 1][i].split("$").length - 1; a++) {
-                        raidWild[raidReqs.length - 1][i][a] = getPosition(raidReqs[raidReqs.length - 1], '$', a + 1);
-                    }
-                }
-            }
-            if (crucibleReqs[crucibleReqs.length - 1].includes("||")) {
-                for (i = 0; i <= crucibleReqs[crucibleReqs.length - 1].split("||").length - 1; i++) {
-                    crucibleor[crucibleReqs.length - 1][i] = crucibleReqs[crucibleReqs.length - 1].split("||")[i];
-                }
-            } else {
-                crucibleor[crucibleReqs.length - 1][0] = crucibleReqs[crucibleReqs.length - 1];
-            }
-            for (i = 0; i < crucibleor[crucibleReqs.length - 1].length; i++) {
-                if (crucibleor[crucibleReqs.length - 1][i].charAt(0) == '~') {
-                    if (crucibleor[crucibleReqs.length - 1][i].slice(-1) == '~') {
-                        crucibleId[crucibleReqs.length - 1][i] = "both";
-                    } else {
-                        crucibleId[crucibleReqs.length - 1][i] = "front";
-                    }
-                } else if (crucibleor[crucibleReqs.length - 1][i].slice(-1) == '~') {
-                    crucibleId[crucibleReqs.length - 1][i] = "end";
-                } else {
-                    crucibleId[crucibleReqs.length - 1][i] = "none";
-                }
-                crucibleWild[crucibleReqs.length - 1][i] = [];
-                if (crucibleor[crucibleReqs.length - 1][i].includes("$")) {
-                    for (a = 0; a <= crucibleor[crucibleReqs.length - 1][i].split("$").length - 1; a++) {
-                        crucibleWild[crucibleReqs.length - 1][i][a] = getPosition(crucibleReqs[crucibleReqs.length - 1], '$', a + 1);
-                    }
-                }
-            }
-            if (pveReqs[pveReqs.length - 1].includes("||")) {
-                for (i = 0; i <= pveReqs[pveReqs.length - 1].split("||").length - 1; i++) {
-                    pveor[pveReqs.length - 1][i] = pveReqs[pveReqs.length - 1].split("||")[i];
-                }
-            } else {
-                pveor[pveReqs.length - 1][0] = pveReqs[pveReqs.length - 1];
-            }
-            for (i = 0; i < pveor[pveReqs.length - 1].length; i++) {
-                if (pveor[pveReqs.length - 1][i].charAt(0) == '~') {
-                    if (pveor[pveReqs.length - 1][i].slice(-1) == '~') {
-                        pveId[pveReqs.length - 1][i] = "both";
-                    } else {
-                        pveId[pveReqs.length - 1][i] = "front";
-                    }
-                } else if (pveor[pveReqs.length - 1][i].slice(-1) == '~') {
-                    pveId[pveReqs.length - 1][i] = "end";
-                } else {
-                    pveId[pveReqs.length - 1][i] = "none";
-                }
-                pveWild[pveReqs.length - 1][i] = [];
-                if (pveor[pveReqs.length - 1][i].includes("$")) {
-                    for (a = 0; a <= pveor[pveReqs.length - 1][i].split("$").length - 1; a++) {
-                        pveWild[pveReqs.length - 1][i][a] = getPosition(pveReqs[pveReqs.length - 1], '$', a + 1);
-                    }
-                }
-            }
-            break;
-    }*/
-}
 
 function getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
@@ -502,13 +343,5 @@ function checkAdmin(message) {
     return false;
 }
 
-function sendSyntax(user, id) {
-    switch (id) {
-        case 0:
-            message.member.user.createDM()
-				.then(dm => dm.send('Destiny raid LFG messages must be in this syntax: ' + '\r\n' + raidReqs.toString().replace(',', ' '), { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
-				.catch(console.error);
-    }
-}
 
 client.login(process.env.BOT_TOKEN);
