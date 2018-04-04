@@ -50,8 +50,7 @@ client.on('message', message => {
 	        message.channel.send('Reset commands to: ' + cmds, { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-	    }
-		if(message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[1]){
+	    }else if(message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[1]){
 		    if (checkAdmin(message)) { return;}
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
@@ -90,8 +89,7 @@ client.on('message', message => {
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 			}
-		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[2]) {
+		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[2]) {
 		    if (checkAdmin(message)) { return; }
 			var requirement = message.content.split(" ").pop();
 			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)){
@@ -158,45 +156,23 @@ client.on('message', message => {
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 			}
-		}
-		if(message.content.split(cmds[0].slice(-1)).pop() == cmds[3]){
+		}else if(message.content.split(cmds[0].slice(-1)).pop() == cmds[3]){
 		    message.channel.send('Requirements:' + '\r\n' + '@here required: ' + hereRequired + '\r\n' + 'lfg-raid requirements: ' + raidReqs.toString().replace(',', ', ') + '\r\n' + 'lfg-crucible requirements: ' + crucibleReqs.toString().replace(',', ', ') + '\r\n' + 'lfg-pve requirements: ' + pveReqs.toString().replace(',', ', '), { code: true, disableEveryone: true, split: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[4]) {
+		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[4]) {
 		    if (checkAdmin(message)) { return; }
 			adminRoles.push(message.content.split(" ").pop());
 		    message.channel.send('Added admin role: ' + message.content.split(" ").pop(), {code:true})
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[5]) {
+		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[5]) {
 		    if (checkAdmin(message)) { return; }
 			adminRoles.splice(adminRoles.indexOf(message.content.split(" ").pop()), 1);
 		    message.channel.send('Removed admin role: ' + message.content.split(" ").pop(), { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-		}
-		/*if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[6]) {
-		    if (checkAdmin(message)) { return; }
-			if(message.content.split(" ").pop() == 'true'){
-				orderMatters = true;
-			    message.channel.send('Set orderMatters to true.', { code: true })
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-			}else if(message.content.split(" ").pop() == 'false'){
-				orderMatters = false;
-			    message.channel.send('Set orderMatters to false.', { code: true })
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-			}else{
-			    message.channel.send('Usage: modB!setOrderMatters true/false', { code: true })
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-			}
-		}*/
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[6]) {
+		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[6]) {
 		    if (checkAdmin(message)) { return; }
 			if(message.content.split(" ").pop() == 'true'){
 				hereRequired = true;
@@ -213,38 +189,17 @@ client.on('message', message => {
 					.then(message => console.log(`Sent message: ${message.content}`))
 					.catch(console.error);
 			}
-		}
-		/*if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[8]) {
-		    if (checkAdmin(message)) { return; }
-			if(message.content.split(" ").pop() == 'true'){
-				allowExtra = true;
-			    message.channel.send('Set allowExtra to true.', { code: true })
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-			}else if(message.content.split(" ").pop() == 'false'){
-				allowExtra = true;
-			    message.channel.send('Set allowExtra to false.', { code: true })
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-			}else{
-			    message.channel.send('Usage: modB!setAllowExtra true/false', { code: true })
-					.then(message => console.log(`Sent message: ${message.content}`))
-					.catch(console.error);
-			}
-		}*/
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[7]) {
+		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[7]) {
 		    if (checkAdmin(message)) { return; }
 		    cmds[cmds.indexOf(getSubstr(message.content, 2))] = getSubstr(message.content, 3);
 		    message.channel.send('Set command ' + getSubstr(message.content, 2) + ' to: ' + getSubstr(message.content, 3), { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-		}
-		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[8]) {
+		}else if (message.content.split(cmds[0].slice(-1)).pop() == cmds[8]) {
 		    message.channel.send('Commands: ' + '\r\n' + 'resetCommands(unchangable),' + cmds, {code:true})
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-		}
-		if (message.content.split(cmds[0].slice(-1)).pop() == cmds[9]) {
+		}else if (message.content.split(cmds[0].slice(-1)).pop() == cmds[9]) {
 		    if(checkAdmin){return;}
             raidReqs = raidDefaults;
             crucibleReqs = crucibleDefaults;
@@ -252,8 +207,7 @@ client.on('message', message => {
             message.channel.send('Set syntax back to defaults.', { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
-		}
-		if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[10]) {
+		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[10]) {
 		    if (checkAdmin(message)) { return; }
 		    var existing = getSubstr(message.content, 3);
 		    var requirement = getSubstr(message.content, 4);
@@ -321,6 +275,10 @@ client.on('message', message => {
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 		    }
+		} else {
+		    message.channel.send('Unknown command. Type ' + cmds[0] + cmds[8] + ' to list commands.', { code: true })
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
 		}
 	}
 	
