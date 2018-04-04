@@ -272,7 +272,7 @@ client.on('message', message => {
 	        return;
 	    }
 	    for (i = 0; i < raidReqs.length; i++) {
-	        if(!message.content.test(raidReqs[i])){
+	        if(!raidReqs[i].test(message.content)){
 	            message.member.user.createDM()
 				    .then(dm => dm.send('Destiny raid LFG messages must be in this syntax: ' + '\r\n' + raidReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 				    .catch(console.error);
@@ -287,7 +287,7 @@ client.on('message', message => {
 	        return;
 	    }
 	    for (i = 0; i < crucibleReqs.length; i++) {
-	        if (!message.content.test(crucibleReqs[i])) {
+	        if (!crucibleReqs[i].test(message.content)) {
 	            message.member.user.createDM()
 				    .then(dm => dm.send('Destiny crucible LFG messages must be in this syntax: ' + '\r\n' + crucibleReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 				    .catch(console.error);
@@ -302,7 +302,7 @@ client.on('message', message => {
 	        return;
 	    }
 	    for (i = 0; i < pveReqs.length; i++) {
-	        if (!message.content.test(pveReqs[i])) {
+	        if (!pveReqs.test(message.content)) {
 	            message.member.user.createDM()
 				    .then(dm => dm.send('Destiny PvE LFG messages must be in this syntax: ' + '\r\n' + pveReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 				    .catch(console.error);
