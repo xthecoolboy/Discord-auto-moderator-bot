@@ -125,7 +125,7 @@ client.on('message', message => {
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
-				        crucibleReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
+				        crucibleReqs.splice(crucibleReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
 					    message.channel.send('Removed requirement from crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
@@ -137,7 +137,7 @@ client.on('message', message => {
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 					}else{
-				        pveReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
+				        pveReqs.splice(crucibleReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()), 1);
 					    message.channel.send('Removed requirement from crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
@@ -271,58 +271,58 @@ client.on('message', message => {
 		    var requirement = getSubstr(message.content, 4);
 		    switch (message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
 		        case 'raid':
-		            if (raidReqs.indexOf(new RegExp(existing, 'i')) == -1) {
+		            if (raidReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()) == -1) {
 		                message.channel.send('Could not find requirement in lfg-raid: ' + existing, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 		            } else {
-		                raidReqs.splice(raidReqs.indexOf(new RegExp(existing, 'i')), 1, new RegExp(requirement, 'i'));
+		                raidReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()), 1, new RegExp(requirement, 'i'));
 		                message.channel.send('Replaced requirement ' + existing + ' with ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 		            }
 		            break;
 		        case 'crucible':
-		            if (crucibleReqs.indexOf(new RegExp(existing, 'i')) == -1) {
+		            if (crucibleReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()) == -1) {
 		                message.channel.send('Could not find requirement in lfg-crucible: ' + existing, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 		            } else {
-		                crucibleReqs.splice(raidReqs.indexOf(new RegExp(existing, 'i')), 1, new RegExp(requirement, 'i'));
+		                crucibleReqs.splice(crucibleReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()), 1, new RegExp(requirement, 'i'));
 		                message.channel.send('Replaced requirement ' + existing + ' with ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 		            }
 		            break;
 		        case 'pve':
-		            if (pveReqs.indexOf(new RegExp(existing, 'i')) == -1) {
+		            if (pveReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()) == -1) {
 		                message.channel.send('Could not find requirement in lfg-pve: ' + existing, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 		            } else {
-		                pveReqs.splice(raidReqs.indexOf(new RegExp(existing, 'i')), 1, new RegExp(requirement, 'i'));
+		                pveReqs.splice(pveReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()), 1, new RegExp(requirement, 'i'));
 		                message.channel.send('Replaced requirement ' + existing + ' with ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 		            }
 		            break;
 		        case 'all':
-		            if (raidReqs.indexOf(new RegExp(existing, 'i')) == -1) {
+		            if (raidReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()) == -1) {
 		                message.channel.send('Could not find requirement in lfg-raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
-		            } else if (crucibleReqs.indexOf(new RegExp(existing, 'i')) == -1) {
+		            } else if (crucibleReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()) == -1) {
 		                message.channel.send('Could not find requirement in lfg-crucible: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
-		            } else if (pveReqs.indexOf(new RegExp(existing, 'i')) == -1) {
+		            } else if (pveReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()) == -1) {
 		                message.channel.send('Could not find requirement in lfg-pve: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
 		            } else {
-		                raidReqs.splice(raidReqs.indexOf(new RegExp(existing, 'i')), 1, new RegExp(requirement, 'i'));
-		                crucibleReqs.splice(raidReqs.indexOf(new RegExp(existing, 'i')), 1, new RegExp(requirement, 'i'));
-		                pveReqs.splice(raidReqs.indexOf(new RegExp(existing, 'i')), 1, new RegExp(requirement, 'i'));
+		                raidReqs.splice(raidReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()), 1, new RegExp(requirement, 'i'));
+		                crucibleReqs.splice(crucibleReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()), 1, new RegExp(requirement, 'i'));
+		                pveReqs.splice(pveReqs.toString().split(',').indexOf(new RegExp(existing, 'i').toString()), 1, new RegExp(requirement, 'i'));
 		                message.channel.send('Replaced requirement ' + existing + ' with ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
