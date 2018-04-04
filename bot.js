@@ -255,7 +255,7 @@ client.on('message', message => {
 	//-------------SYNTAX CHECKING----------------
     //############################################
 	console.log('Members: ' + message.mentions.members.array());
-    console.log(message.mentions.members.array() == null)
+    console.log(message.mentions.members.array() == '')
 
 	if(hereRequired){
 	    if(!message.mentions.everyone){
