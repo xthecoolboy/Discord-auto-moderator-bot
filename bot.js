@@ -17,18 +17,6 @@ var raidReqs = [];
 var crucibleReqs = [];
 var pveReqs = [];
 
-var raidId = [[],[]];
-var crucibleId = [[],[]];
-var pveId = [[], []];
-
-var raidWild = [[], []];
-var crucibleWild = [[], []];
-var pveWild = [[], []];
-
-var raidor = [[],[]];
-var crucibleor = [[],[]];
-var pveor = [[], []];
-
 var cmds = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault', 'replaceReqs'];
 const cmdsReset = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault', 'replaceReqs'];
 
