@@ -22,12 +22,7 @@ var cmds = [];
 
 client.on('ready', () => {
     console.log("I am ready!");
-    raidReqs = config.defaultRaidReqs;
-    crucibleReqs = config.defaultCrucibleReqs;
-    pveReqs = config.defaultPveReqs;
-    hereRequired = config.defaultHereRequired;
-    adminRoles = config.defaultAdminRoles;
-    cmds = config.defaultCmds;
+    
 });
 
 client.on('message', message => {
@@ -37,6 +32,12 @@ client.on('message', message => {
 		crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel);
 		pveChannel = currentGuild.channels.find("name", config.defaultPveChannel);
 		questionsChannel = currentGuild.channels.find("name", config.defaultQuestionsChannel);
+		raidReqs = config.defaultRaidReqs;
+		crucibleReqs = config.defaultCrucibleReqs;
+		pveReqs = config.defaultPveReqs;
+		hereRequired = config.defaultHereRequired;
+		adminRoles = config.defaultAdminRoles;
+		cmds = config.defaultCmds;
 		foundGuild = true;
 	}
 	
