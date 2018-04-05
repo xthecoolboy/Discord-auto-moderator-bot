@@ -199,7 +199,7 @@ client.on('message', message => {
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}else if (message.content.split(cmds[0].slice(-1)).pop() == cmds[9]) {
-		    if(checkAdmin){return;}
+		    if(checkAdmin(message)){return;}
 		    raidReqs = config.defaultRaidReqs;
 		    crucibleReqs = config.defaultCrucibleReqs;
 		    pveReqs = config.defaultPveReqs;
