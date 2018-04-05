@@ -206,6 +206,11 @@ client.on('message', message => {
 		    hereRequired = config.defaultHereRequired;
 		    adminRoles = config.defaultAdminRoles;
 		    cmds = config.defaultCmds;
+		    console.log('Config defaults: ' + config.defaultCmds);
+		    raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel);
+		    crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel);
+		    pveChannel = currentGuild.channels.find("name", config.defaultPveChannel);
+		    questionsChannel = currentGuild.channels.find("name", config.defaultQuestionsChannel);
             message.channel.send('Set everything to defaults.', { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
