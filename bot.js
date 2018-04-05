@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const client = new Discord.Client();
+const config = require('./config');
 
 var raidChannel;
 var crucibleChannel;
@@ -8,36 +9,34 @@ var pveChannel;
 var questionsChannel;
 
 var currentGuild;
-var foundGuild = false;
+var foundGuild;
 
-var hereRequired = false;
-var adminRoles = ["LEADERSHIP"];
+var hereRequired;
+var adminRoles = [];
 
 var raidReqs = [];
 var crucibleReqs = [];
 var pveReqs = [];
 
-var cmds = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault', 'replaceReqs'];
-const cmdsReset = ['modB!', 'addReqs', 'rmReqs', 'listReqs', 'addAdminRole', 'rmAdminRole', 'setHereRequired', 'setCmd', 'commands', 'setDefault', 'replaceReqs'];
-
-const raidDefaults = [new RegExp('LF[1-5]M|LFG', 'i'), new RegExp('prestige|prest|prest.|normal|anything', 'i'), new RegExp('levi|leviathan|raid|eow|lair|raid lair', 'i'), new RegExp('https://discord.gg/|CR[1-4]', 'i')];
-const crucibleDefaults = [new RegExp('LF[1-4]M|LFG', 'i'), new RegExp('trials|crucible|pvp|quickplay|quick|anything', 'i'), new RegExp('https://discord.gg/|CC[1-5]', 'i')];
-const pveDefaults = [new RegExp('LF[1-5]M|LFG', 'i'), new RegExp('prestige|prest|prest.|normal|anything', 'i'), new RegExp('levi|leviathan|raid|eow|lair|raid lair', 'i'), new RegExp('https://discord.gg/|CS[1-4]', 'i')];
+var cmds = [];
 
 client.on('ready', () => {
     console.log("I am ready!");
-    raidReqs = raidDefaults;
-    crucibleReqs = crucibleDefaults;
-    pveReqs = pveDefaults;
+    raidReqs = config.defaultRaidReqs;
+    crucibleReqs = config.defaultCrucibleReqs;
+    pveReqs = config.defaultPveReqs;
+    hereRequired = config.defaultHereRequired;
+    adminRoles = config.defaultAdminRoles;
+    cmds = config.defaultCmds;
 });
 
 client.on('message', message => {
 	if(!foundGuild){
 		currentGuild = message.guild;
-		raidChannel = currentGuild.channels.find("name", "lfg-raid");
-		crucibleChannel = currentGuild.channels.find("name", "lfg-crucible");
-		pveChannel = currentGuild.channels.find("name", "lfg-pve");
-		questionsChannel = currentGuild.channels.find("name", "lfg-questions");
+		raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel);
+		crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel);
+		pveChannel = currentGuild.channels.find("name", config.defaultPveChannel);
+		questionsChannel = currentGuild.channels.find("name", config.defaultQuestionsChannel);
 		foundGuild = true;
 	}
 	
@@ -201,10 +200,13 @@ client.on('message', message => {
 				.catch(console.error);
 		}else if (message.content.split(cmds[0].slice(-1)).pop() == cmds[9]) {
 		    if(checkAdmin){return;}
-            raidReqs = raidDefaults;
-            crucibleReqs = crucibleDefaults;
-            pveReqs = pveDefaults;
-            message.channel.send('Set syntax back to defaults.', { code: true })
+		    raidReqs = config.defaultRaidReqs;
+		    crucibleReqs = config.defaultCrucibleReqs;
+		    pveReqs = config.defaultPveReqs;
+		    hereRequired = config.defaultHereRequired;
+		    adminRoles = config.defaultAdminRoles;
+		    cmds = config.defaultCmds;
+            message.channel.send('Set everything to defaults.', { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
 		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[10]) {
