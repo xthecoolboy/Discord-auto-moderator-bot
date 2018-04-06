@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const client = new Discord.Client();
-const Config = require('./config');
-const config = new Config();
+const config = require('./config');
 
 var raidChannel;
 var crucibleChannel;
@@ -23,22 +22,21 @@ var cmds = [];
 
 client.on('ready', () => {
     console.log("I am ready!");
-    
+    raidReqs = config.defaultRaidReqs.slice();
+    crucibleReqs = config.defaultCrucibleReqs.slice();
+    pveReqs = config.defaultPveReqs.slice();
+    hereRequired = config.defaultHereRequired.valueOf();
+    adminRoles = config.defaultAdminRoles.slice();
+    cmds = config.defaultCmds.slice();
 });
 
 client.on('message', message => {
 	if(!foundGuild){
 		currentGuild = message.guild;
-		raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel);
-		crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel);
-		pveChannel = currentGuild.channels.find("name", config.defaultPveChannel);
-		questionsChannel = currentGuild.channels.find("name", config.defaultQuestionsChannel);
-		raidReqs = config.defaultRaidReqs;
-		crucibleReqs = config.defaultCrucibleReqs;
-		pveReqs = config.defaultPveReqs;
-		hereRequired = config.defaultHereRequired;
-		adminRoles = config.defaultAdminRoles;
-		cmds = config.defaultCmds;
+		raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel.slice(0));
+		crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel.slice(0));
+		pveChannel = currentGuild.channels.find("name", config.defaultPveChannel.slice(0));
+		questionsChannel = currentGuild.channels.find("name", config.defaultQuestionsChannel.slice(0));
 		foundGuild = true;
 	}
 	
@@ -202,17 +200,17 @@ client.on('message', message => {
 				.catch(console.error);
 		}else if (message.content.split(cmds[0].slice(-1)).pop() == cmds[9]) {
 		    if(checkAdmin(message)){return;}
-		    raidReqs = config.defaultRaidReqs;
-		    crucibleReqs = config.defaultCrucibleReqs;
-		    pveReqs = config.defaultPveReqs;
-		    hereRequired = config.defaultHereRequired;
-		    adminRoles = config.defaultAdminRoles;
-		    cmds = config.defaultCmds;
+		    raidReqs = config.defaultRaidReqs.slice();
+		    crucibleReqs = config.defaultCrucibleReqs.slice();
+		    pveReqs = config.defaultPveReqs.slice();
+		    hereRequired = config.defaultHereRequired.valueOf();
+		    adminRoles = config.defaultAdminRoles.slice();
+		    cmds = config.defaultCmds.slice();
 		    console.log('Config defaults: ' + config.defaultCmds);
-		    raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel);
-		    crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel);
-		    pveChannel = currentGuild.channels.find("name", config.defaultPveChannel);
-		    questionsChannel = currentGuild.channels.find("name", config.defaultQuestionsChannel);
+		    raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel.slice(0));
+		    crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel.slice(0));
+		    pveChannel = currentGuild.channels.find("name", config.defaultPveChannel.slice(0));
+		    questionsChannel = currentGuild.channels.find("name", config.defaultQuestionsChannel.slice(0));
             message.channel.send('Set everything to defaults.', { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
