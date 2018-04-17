@@ -13,6 +13,7 @@ var foundGuild;
 
 var hereRequired;
 var adminRoles = [];
+var singleString;
 
 var raidReqs = [];
 var crucibleReqs = [];
@@ -51,25 +52,22 @@ client.on('message', message => {
 				.catch(console.error);
 	    }else if(message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[1]){
 		    if (checkAdmin(message)) { return;}
-			var requirement = message.content.split(" ").pop();
-			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)) {
+			var requirement = getSubstrByChar(message.content, '"');
+			switch(getSubstr(message.content, 2)) {
 			    case 'raid':
 			        raidReqs.push(new RegExp(requirement, "i"));
-				    //setupReq("raid");
 			        message.channel.send('Added requirement to raid: ' + requirement, {code:true})
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'crucible':
 				    crucibleReqs.push(new RegExp(requirement, "i"));
-				    //setupReq("crucible");
 				    message.channel.send('Added requirement to crucible: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
 					break;
 				case 'pve':
 				    pveReqs.push(new RegExp(requirement, "i"));
-				    //setupReq("pve");
 				    message.channel.send('Added requirement to pve: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
@@ -78,7 +76,6 @@ client.on('message', message => {
 				    raidReqs.push(new RegExp(requirement, "i"));
 				    crucibleReqs.push(new RegExp(requirement, "i"));
 				    pveReqs.push(new RegExp(requirement, "i"));
-					//setupReq("all");
 				    message.channel.send('Added requirement to all: ' + requirement, { code: true })
 						.then(message => console.log(`Sent message: ${message.content}`))
 						.catch(console.error);
@@ -90,10 +87,10 @@ client.on('message', message => {
 			}
 		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[2]) {
 		    if (checkAdmin(message)) { return; }
-			var requirement = message.content.split(" ").pop();
-			switch(message.content.substr(message.content.indexOf(' ') + 1, message.content.indexOf(' ', message.content.indexOf(' ') + 1) - message.content.indexOf(' ') - 1)){
+			var requirement = getSubstr(message.content, 3);
+			switch(getSubstr(message.content, 2)){
 				case 'raid':
-				    if (raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
+				    if (raidReqs.indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
@@ -206,7 +203,6 @@ client.on('message', message => {
 		    hereRequired = config.defaultHereRequired.valueOf();
 		    adminRoles = config.defaultAdminRoles.slice();
 		    cmds = config.defaultCmds.slice();
-		    console.log('Config defaults: ' + config.defaultCmds);
 		    raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel.slice(0));
 		    crucibleChannel = currentGuild.channels.find("name", config.defaultCrucibleChannel.slice(0));
 		    pveChannel = currentGuild.channels.find("name", config.defaultPveChannel.slice(0));
@@ -293,6 +289,8 @@ client.on('message', message => {
 	//-------------SYNTAX CHECKING----------------
     //############################################
 
+	if (message.channel != raidChannel && message.channel != crucibleChannel && message.channel != pveChannel) {return;}
+
 	if(hereRequired){
 	    if(!message.mentions.everyone){
 	        message.member.user.createDM()
@@ -340,7 +338,7 @@ client.on('message', message => {
 	        return;
 	    }
 	    for (i = 0; i < pveReqs.length; i++) {
-	        if (!pveReqs[].test(message.content)) {
+	        if (!pveReqs[i].test(message.content)) {
 	            message.member.user.createDM()
 				    .then(dm => dm.send('Destiny PvE LFG messages must be in this syntax: ' + '\r\n' + pveReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 				    .catch(console.error);
@@ -363,6 +361,10 @@ function getSubstr(string, index) {
         return string.subString(0, string.indexOf(' '));
     }
     return string.substr(getPosition(string, ' ', index-1)+1, getPosition(string, ' ', index) - getPosition(string, ' ', index-1)-1);
+}
+
+function getSubstrByChar(string, char) {
+    return string.substr(getPosition(string, char, 1) + 1, getPosition(string, char, 2) - getPosition(string, char, 1) - 1);
 }
 
 function checkAdmin(message) {
