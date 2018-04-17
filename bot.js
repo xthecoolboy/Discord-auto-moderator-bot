@@ -46,7 +46,7 @@ client.on('message', message => {
 	//############################################
 	if (message.content.substr(0, cmds[0].length) == cmds[0]) {
 	    if (message.content.split(cmds[0].slice(-1)).pop() == 'resetCommands') {
-	        cmds = cmdsReset;
+	        cmds = config.defaultCommands.slice();
 	        message.channel.send('Reset commands to: ' + cmds, { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
@@ -87,10 +87,10 @@ client.on('message', message => {
 			}
 		}else if (message.content.substr(cmds[0].length, message.content.indexOf(" ") - cmds[0].length) == cmds[2]) {
 		    if (checkAdmin(message)) { return; }
-			var requirement = getSubstr(message.content, 3);
+			var requirement = getSubstrByChar(message.content, '"');
 			switch(getSubstr(message.content, 2)){
 				case 'raid':
-				    if (raidReqs.indexOf(new RegExp(requirement, 'i').toString()) == -1) {
+				    if (raidReqs.toString().split(',').indexOf(new RegExp(requirement, 'i').toString()) == -1) {
 					    message.channel.send('Could not find requirement in lfg-raid: ' + requirement, { code: true })
 							.then(message => console.log(`Sent message: ${message.content}`))
 							.catch(console.error);
