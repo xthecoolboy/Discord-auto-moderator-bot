@@ -46,7 +46,7 @@ client.on('message', message => {
 	//############################################
 	if (message.content.substr(0, cmds[0].length) == cmds[0]) {
 	    if (message.content.split(cmds[0].slice(-1)).pop() == 'resetCommands') {
-	        cmds = config.defaultCommands.slice();
+	        cmds = config.defaultCmds.slice();
 	        message.channel.send('Reset commands to: ' + cmds, { code: true })
 				.then(message => console.log(`Sent message: ${message.content}`))
 				.catch(console.error);
