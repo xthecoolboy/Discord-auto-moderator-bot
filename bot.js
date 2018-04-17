@@ -340,7 +340,7 @@ client.on('message', message => {
 	        return;
 	    }
 	    for (i = 0; i < pveReqs.length; i++) {
-	        if (!pveReqs.test(message.content)) {
+	        if (!pveReqs[].test(message.content)) {
 	            message.member.user.createDM()
 				    .then(dm => dm.send('Destiny PvE LFG messages must be in this syntax: ' + '\r\n' + pveReqs.toString().replace(',', ' ') + '\r\n' + '@here required is ' + hereRequired, { disableEveryone: true, split: true, code: true }).then(message => console.log(`Sent message: ${message.content}`)).catch(console.error))
 				    .catch(console.error);
