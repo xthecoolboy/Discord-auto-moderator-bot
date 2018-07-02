@@ -32,8 +32,9 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
+	console.log("test");
 	if(message.member.user.bot){
-		console.log("test");
+		
 		return;  
   	}
 	message.channel.send("Fuck you " + message.member.nickname)
