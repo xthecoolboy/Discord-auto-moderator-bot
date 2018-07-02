@@ -32,6 +32,12 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
+	if(message.member.user.bot){
+		return;  
+  	}
+	message.channel.send("Fuck you " + message.member.nickname)
+		.then(message => console.log(`Sent message: ${message.content}`))
+		.catch(console.error);
 	if(!foundGuild){
 		currentGuild = message.guild;
 		raidChannel = currentGuild.channels.find("name", config.defaultRaidChannel.slice(0));
